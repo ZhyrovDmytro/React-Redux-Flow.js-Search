@@ -17,11 +17,12 @@ export default class SearchForm extends Component {
 
     showInputValue = (e) => {
         this.props.onSearch(this.query.value);
+        console.log(this.query.value);
     }
 
     render() {
         return (
-            <div className="saerch">
+            <div className="search">
                 <form className="search__form">
                     <input
                         className="search__input"
