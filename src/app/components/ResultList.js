@@ -1,55 +1,28 @@
 import React, { Component } from 'react';
 
-export default class ResultList extends Component {
-    render() {
-        const images = this.props.images;
+export default (props) => {
+    const createItem = [...props.images].map((image) => {
         return (
-            <div className="results">
-                {
-                    images.map((image) => {
-                        return (
-                            <figure
-                                key={image.id}
-                            >
-                                <picture
-                                    className="results__item"
-                                >
-                                    <img
-                                        className="results__image"
-                                        src={image.urls.small}
-                                        alt=""
-                                    />
-                                </picture>
-                            </figure>
-                        );
-                    })
-                }
-            </div>
+            <figure
+                key={image.id}
+                className="results__wrapper"
+            >
+                <picture
+                    className="results__item"
+                >
+                    <img
+                        className="results__image"
+                        src={image.urls.small}
+                        alt=""
+                    />
+                </picture>
+            </figure>
         );
-    }
-}
+    });
 
-// import React, { Component } from 'react';
-
-// const ResultList = (images) => {
-
-//     return (
-//         <div className="">
-//             {
-//                 [...images].map((image) => {
-//                     return (
-//                         <div key={image.id}>
-//                             <img
-//                                 className="results__image"
-//                                 src={image.urls.small}
-//                                 alt=""
-//                             />
-//                         </div>
-//                     );
-//                 })
-//             }
-//         </div>
-//     );
-// };
-
-// export default ResultList;
+    return (
+        <div className="results">
+            { createItem }
+        </div>
+    );
+};

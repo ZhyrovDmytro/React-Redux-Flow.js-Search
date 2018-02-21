@@ -19,16 +19,21 @@ export default class Search extends Component {
         this.requestService = this.requestService.bind(this);
     }
 
-    requestService = (query) => {
-        return axios.get(`${API.SEARCH_ITEMS}?page=1&per_page=10&query=${query}&client_id=${unsplashClient.ID}`)
+    requestService = (path) => {
+        return axios.get(path)
             .then((respond) => {
-                this.setState({ images: respond.data.results });
+                if (respond.data instanceof Array) {
+                    this.setState({ images: respond.data });
+                } else if (respond.data instanceof Object) {
+                    this.setState({ images: respond.data.results });
+                }
+
                 setTimeout(() => {
                     this.imageLoaded();
-                }, 100);
+                }, 500);
             })
             .catch((error) => {
-                console.error('FAILED');
+                console.error('FAILED!');
             });
     }
 

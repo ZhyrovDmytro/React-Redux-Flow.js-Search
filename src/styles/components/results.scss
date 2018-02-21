@@ -30,6 +30,10 @@
         border-radius: 10px;
     }
 
+    &__info {
+        // position: absolute;
+    }
+
     @keyframes appearImage {
         0% {
             opacity: 0;
@@ -40,5 +44,8 @@
             opacity: 1;
             visibility: visible;
         }
+    }
+
+    &__wrapper {
     }
 }
