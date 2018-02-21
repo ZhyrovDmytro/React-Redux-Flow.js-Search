@@ -4,16 +4,23 @@ export default class ResultList extends Component {
     render() {
         const images = this.props.images;
         return (
-            <div className="">
+            <div className="results">
                 {
                     images.map((image) => {
                         return (
-                            <div key={image.id}>
-                                <img
-                                    src={image.urls.small}
-                                    alt=""
-                                />
-                            </div>
+                            <figure
+                                key={image.id}
+                            >
+                                <picture
+                                    className="results__item"
+                                >
+                                    <img
+                                        className="results__image"
+                                        src={image.urls.small}
+                                        alt=""
+                                    />
+                                </picture>
+                            </figure>
                         );
                     })
                 }
@@ -33,6 +40,7 @@ export default class ResultList extends Component {
 //                     return (
 //                         <div key={image.id}>
 //                             <img
+//                                 className="results__image"
 //                                 src={image.urls.small}
 //                                 alt=""
 //                             />
