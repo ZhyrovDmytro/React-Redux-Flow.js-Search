@@ -15,6 +15,7 @@ module.exports = {
         'import/first': 0, // Este sorts by atom/sort-lines natural order.
         'import/newline-after-import': 0,
         'import/no-duplicates': 2,
+        'import/no-unresolved': 0,
         'import/no-extraneous-dependencies': 0,
         'import/no-named-as-default': 0,
         'import/prefer-default-export': 0, // No. Actions can have just one action.

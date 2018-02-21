@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import ResultList from './ResultList';
+import Masonry from 'masonry-layout';
 import axios from 'axios';
+
+import {
+    API,
+    unsplashClient
+} from './../constants';
 
 export default class Search extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             images: []
         };
@@ -14,13 +19,30 @@ export default class Search extends Component {
         this.requestService = this.requestService.bind(this);
     }
 
-    requestService = () => {
-        return axios.get('https://api.unsplash.com/search/photos/?page=1&per_page=10&query=car&client_id=452c69632818336a2c6b341b066847cb873fd987fa1876c039f59b615bf3fb9b')
+    requestService = (path) => {
+        return axios.get(path)
             .then((respond) => {
-                console.log(respond.data.results);
-                this.setState({ images: respond.data.results });
+                if (respond.data instanceof Array) {
+                    this.setState({ images: respond.data });
+                } else if (respond.data instanceof Object) {
+                    this.setState({ images: respond.data.results });
+                }
+
+                setTimeout(() => {
+                    this.imageLoaded();
+                }, 500);
+            })
+            .catch((error) => {
+                console.error('FAILED!');
             });
     }
+
+    imageLoaded = () => {
+        const grid = document.querySelector('.results');
+        const gridLayout = new Masonry(grid, {
+            itemSelector: '.results__item'
+        });
+    };
 
     render() {
         const { images } = this.state;
@@ -28,9 +50,10 @@ export default class Search extends Component {
             <div>
                 <headr className="header">
                     <SearchForm onSearch={this.requestService} />
-                    <ResultList images={images} />
                 </headr>
+                <ResultList images={images} />
             </div>
+
         );
     }
 
