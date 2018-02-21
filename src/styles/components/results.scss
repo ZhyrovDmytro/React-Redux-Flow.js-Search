@@ -1,0 +1,44 @@
+.results {
+    margin-top: 10px;
+
+    &::after {
+        display: block;
+        clear: both;
+        content: '';
+    }
+
+    &__item {
+        display: block;
+        width: 100%;
+        padding: 5px;
+        animation: ease 1s appearImage;
+
+        @include media-breakpoint-up(md) {
+            float: left;
+            width: 50%;
+        }
+
+        @include media-breakpoint-up(lg) {
+            width: 33.33%;
+        }
+    }
+
+    &__image {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    @keyframes appearImage {
+        0% {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        100% {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
