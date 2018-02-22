@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Item from './Item';
+import ModalWindow from './ModalWindow';
 
 export default (props) => {
     const createItem = [...props.images].map((image) => {
@@ -7,15 +9,7 @@ export default (props) => {
                 key={image.id}
                 className="results__wrapper"
             >
-                <picture
-                    className="results__item"
-                >
-                    <img
-                        className="results__image"
-                        src={image.urls.small}
-                        alt=""
-                    />
-                </picture>
+                <Item image={image} />
             </figure>
         );
     });

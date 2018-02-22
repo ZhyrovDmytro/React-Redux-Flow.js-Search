@@ -22,6 +22,7 @@ export default class Search extends Component {
     requestService = (path) => {
         return axios.get(path)
             .then((respond) => {
+                console.log(respond.data);
                 if (respond.data instanceof Array) {
                     this.setState({ images: respond.data });
                 } else if (respond.data instanceof Object) {
