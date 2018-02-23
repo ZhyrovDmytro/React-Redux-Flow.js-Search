@@ -5,6 +5,19 @@ import {
     unsplashClient
 } from './../constants';
 
+const styles = {
+    button: {
+        backgroundColor: '#afafaf',
+        transition: '.25s all',
+        cursor: 'not-allowed'
+    },
+    buttonEnabled: {
+        backgroundColor: 'green',
+        cursor: 'pointer',
+    }
+};
+
+
 export default class SearchForm extends Component {
     constructor(props) {
         super(props);
@@ -13,14 +26,24 @@ export default class SearchForm extends Component {
         this.searchImages = this.searchImages.bind(this);
 
         this.state = {
-            inputValue: ''
+            inputValue: '',
+            buttonDisabled: true
         };
     }
 
     updateInputValue = (event) => {
+        const valueLength = event.target.value.length;
+
+
         this.setState({
             inputValue: event.currentTarget.value
         });
+
+        if (valueLength >= 3) {
+            this.setState(() => ({ buttonDisabled: false }));
+        } else if (!this.state.buttonDisabled) {
+            this.setState(() => ({ buttonDisabled: true }));
+        }
     }
 
     searchImages = (path, respons) => {
@@ -44,13 +67,16 @@ export default class SearchForm extends Component {
                 </div>
                 <div className="search__buttons">
                     <button
-                        className="saerch__find button"
+                        className={
+                            this.state.buttonDisabled ? 'button disabled' : 'button'
+                        }
                         onClick={() => this.searchImages(searchByInputValue)}
+                        disabled={this.state.buttonDisabled}
                     >
-                        FIND
+                        { this.state.buttonDisabled ? 'DISABLED' : 'FIND' }
                     </button>
                     <button
-                        className="saerch__random button grey"
+                        className="button blue"
                         onClick={event => this.searchImages(searchRandomImages)}
                     >
                         RANDOM
