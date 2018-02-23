@@ -68,7 +68,8 @@
 
         &--like,
         &--download {
-            display: inline-block;
+            display: flex;
+            align-items: center;
             padding: 5px 10px;
             margin-right: 5px;
             color: $grey-dark;
@@ -79,6 +80,11 @@
             &:hover {
                 background-color: rgb(235, 235, 235);
             }
+        }
+
+        &--icon {
+            @include size(18px);
+            margin-right: 5px;
         }
     }
 
