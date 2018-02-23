@@ -59,12 +59,12 @@
     }
 
     &__option {
-        position: absolute;
         top: 10px;
         z-index: 1000;
         display: flex;
         justify-content: flex-end;
         width: 100%;
+        padding: 10px;
 
         &--like,
         &--download {

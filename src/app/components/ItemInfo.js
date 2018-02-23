@@ -1,13 +1,8 @@
 import React from 'react';
 import InfoOptions from './InfoOptions';
+import ProfileImage from './ProfileImage';
 
 export default function ItemInfo(props) {
-    const profileImage = (
-        <img
-            className="results__profile--image"
-            src={props.info.user.profile_image.small}
-            alt=""
-        />);
 
     return (
         <div className="results__info">
@@ -15,7 +10,7 @@ export default function ItemInfo(props) {
             <div className="results__profile">
                 <picture>
                     <a href={props.info.user.links.html}>
-                        { profileImage }
+                        <ProfileImage info={props.info} />
                     </a>
                 </picture>
                 <span className="results__profile--name">

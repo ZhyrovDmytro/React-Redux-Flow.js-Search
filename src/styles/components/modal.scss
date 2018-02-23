@@ -46,6 +46,7 @@
     &__profile {
         position: relative;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         margin: 0;
 
@@ -102,12 +103,6 @@
             &:hover {
                 color: #000;
             }
-        }
-
-        &--photo {
-            @include size(50px);
-            margin: 10px 5px;
-            border-radius: 50%;
         }
     }
 

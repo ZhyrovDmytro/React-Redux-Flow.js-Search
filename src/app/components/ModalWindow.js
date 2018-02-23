@@ -1,5 +1,6 @@
 import React from 'react';
 import InfoOptions from './InfoOptions';
+import ProfileImage from './ProfileImage';
 
 export default (props) => {
     return (
@@ -10,7 +11,7 @@ export default (props) => {
                         <div className="modal__info--profile">
                             <picture>
                                 <a href={props.image.user.links.html}>
-                                    <img className="modal__info--photo" src={props.image.user.profile_image.small} alt="Unsplash" />
+                                    <ProfileImage info={props.image} />
                                 </a>
                             </picture>
                             <p className="text-left">
