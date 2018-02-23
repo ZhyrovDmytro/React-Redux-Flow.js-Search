@@ -5,19 +5,6 @@ import {
     unsplashClient
 } from './../constants';
 
-const styles = {
-    button: {
-        backgroundColor: '#afafaf',
-        transition: '.25s all',
-        cursor: 'not-allowed'
-    },
-    buttonEnabled: {
-        backgroundColor: 'green',
-        cursor: 'pointer',
-    }
-};
-
-
 export default class SearchForm extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +14,8 @@ export default class SearchForm extends Component {
 
         this.state = {
             inputValue: '',
-            buttonDisabled: true
+            buttonDisabled: true,
+            pageNumber: 1
         };
     }
 
@@ -46,12 +34,12 @@ export default class SearchForm extends Component {
         }
     }
 
-    searchImages = (path, respons) => {
+    searchImages = (path) => {
         this.props.onSearch(path);
     }
 
     render() {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=1&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumber}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
         return (

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { paths } from './../../constants';
 
 export default function icon(props) {

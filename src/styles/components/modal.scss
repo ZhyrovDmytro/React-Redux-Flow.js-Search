@@ -160,6 +160,7 @@
 
         &--icon {
             @include size(20px);
+            fill: $grey;
         }
     }
 }
