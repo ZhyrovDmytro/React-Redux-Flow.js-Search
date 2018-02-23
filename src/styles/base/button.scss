@@ -1,12 +1,24 @@
 .button {
+    width: 100%;
     min-width: 150px;
-    color: #fff;
     padding: 5px;
+    color: #fff;
     background-color: $green;
     border: 1px solid #fff;
     border-radius: 5px;
     outline: none;
-    width: 100%;
+    transition: all .4s ease;
+
+    &.disabled {
+        min-width: 120px;
+        padding: 5px 0;
+        background-color: #8b8b8b;
+
+        &:hover {
+            cursor: not-allowed;
+            background-color: #8b8b8b;
+        }
+    }
 
     @include media-breakpoint-up(md) {
         width: unset;
@@ -19,12 +31,12 @@
         outline: none;
     }
 
-    &.grey {
-        background-color: $grey;
+    &.blue {
+        background-color: $blue;
 
         &:hover,
         &:focus {
-            background-color: $grey-dark;
+            background-color: $blue-dark;
         }
     }
 }

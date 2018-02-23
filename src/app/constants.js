@@ -6,3 +6,7 @@ export const API = {
 export const unsplashClient = {
     ID: '452c69632818336a2c6b341b066847cb873fd987fa1876c039f59b615bf3fb9b'
 };
+
+export const paths = {
+    GLOBAL: `${window.location.origin}`
+};

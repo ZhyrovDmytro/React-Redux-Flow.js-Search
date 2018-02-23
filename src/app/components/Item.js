@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ItemInfo from './ItemInfo';
+import ModalWindow from './ModalWindow';
 
 export default class Item extends Component {
     state = {
@@ -14,13 +15,7 @@ export default class Item extends Component {
 
     render() {
         const modal = this.state.isOpen ? (
-            <div className="modal">
-                <img
-                    className="results__image"
-                    src={this.props.image.urls.small}
-                    alt=""
-                />
-            </div>
+            <ModalWindow image={this.props.image} />
         ) : null;
         return (
             <picture

@@ -1,31 +1,16 @@
 import React from 'react';
+import InfoOptions from './InfoOptions';
+import ProfileImage from './ProfileImage';
 
 export default function ItemInfo(props) {
-    const profileImage = (
-        <img
-            className="results__profile--image"
-            src={props.info.user.profile_image.small}
-            alt=""
-        />);
 
     return (
         <div className="results__info">
-            <div
-                className="results__option"
-            >
-                <a href={props.info.links.html} className="link link--grey results__option--like">
-                    {props.info.likes}
-                </a>
-                <a className="link link--grey results__option--download" href={props.info.links.download} download>
-                    <span>
-                        Download
-                    </span>
-                </a>
-            </div>
+            <InfoOptions info={props.info} />
             <div className="results__profile">
                 <picture>
                     <a href={props.info.user.links.html}>
-                        { profileImage }
+                        <ProfileImage info={props.info} />
                     </a>
                 </picture>
                 <span className="results__profile--name">

@@ -13,22 +13,33 @@ export default class SearchForm extends Component {
         this.searchImages = this.searchImages.bind(this);
 
         this.state = {
-            inputValue: ''
+            inputValue: '',
+            buttonDisabled: true,
+            pageNumber: 1
         };
     }
 
     updateInputValue = (event) => {
+        const valueLength = event.target.value.length;
+
+
         this.setState({
             inputValue: event.currentTarget.value
         });
+
+        if (valueLength >= 3) {
+            this.setState(() => ({ buttonDisabled: false }));
+        } else if (!this.state.buttonDisabled) {
+            this.setState(() => ({ buttonDisabled: true }));
+        }
     }
 
-    searchImages = (path, respons) => {
+    searchImages = (path) => {
         this.props.onSearch(path);
     }
 
     render() {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=1&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumber}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
         return (
@@ -44,13 +55,16 @@ export default class SearchForm extends Component {
                 </div>
                 <div className="search__buttons">
                     <button
-                        className="saerch__find button"
+                        className={
+                            this.state.buttonDisabled ? 'button disabled' : 'button'
+                        }
                         onClick={() => this.searchImages(searchByInputValue)}
+                        disabled={this.state.buttonDisabled}
                     >
-                        FIND
+                        { this.state.buttonDisabled ? 'DISABLED' : 'FIND' }
                     </button>
                     <button
-                        className="saerch__random button grey"
+                        className="button blue"
                         onClick={event => this.searchImages(searchRandomImages)}
                     >
                         RANDOM

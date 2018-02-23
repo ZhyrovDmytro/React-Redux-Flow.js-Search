@@ -7,13 +7,8 @@
     height: 100%;
     padding-top: 0;
     overflow: auto;
-    transition: all .2s ease;
-
-    &.active {
-        background-color: rgba(100, 100, 100, .5);
-        opacity: 1;
-        visibility: visible;
-    }
+    cursor: zoom-out;
+    background-color: rgba(255, 255, 255, .685);
 
     &__content {
         margin: 60px 0;
@@ -48,7 +43,9 @@
     }
 
     &__profile {
+        position: relative;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         margin: 0;
 
@@ -63,14 +60,7 @@
 
     &__figure {
         margin-top: 20px;
-    }
-
-    &__item {
-        display: none;
-
-        &.active {
-            display: block !important;
-        }
+        text-align: center;
     }
 
     &__image {
@@ -89,7 +79,7 @@
         }
 
         @include media-breakpoint-up(lg) {
-            max-height: calc(100vh - 230px);
+            max-height: calc(100vh - 250px);
         }
     }
 
@@ -107,18 +97,11 @@
         &--name,
         &--link {
             font-size: 1.2em;
-            color: #fff;
             text-decoration: none;
 
             &:hover {
                 color: #000;
             }
-        }
-
-        &--photo {
-            @include size(50px);
-            margin: 10px 5px;
-            border-radius: 50%;
         }
     }
 
@@ -177,6 +160,7 @@
 
         &--icon {
             @include size(20px);
+            fill: $grey;
         }
     }
 }
