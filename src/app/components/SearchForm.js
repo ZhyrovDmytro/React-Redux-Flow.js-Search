@@ -76,7 +76,10 @@ export default class SearchForm extends Component {
                     </button>
                     <button
                         className="button blue"
-                        onClick={event => this.searchImages(searchRandomImages)}
+                        onClick={event => {
+                            this.setState({ inputValue: '' });
+                            this.searchImages(searchRandomImages);
+                        }}
                     >
                         RANDOM
                     </button>

@@ -18,40 +18,40 @@ export default class Search extends Component {
             loadMoreItems: false,
             searchRandom: false
         };
-
-        this.requestService = this.requestService.bind(this);
-        this.loadMoreImages = this.loadMoreImages.bind(this);
     }
 
     requestService = (path) => {
         return axios.get(path)
-            .then((respond) => {
-                console.log(respond);
-                if (respond.data instanceof Array) {
+            .then((response) => {
+
+                const newImages = this.state.images.concat(response.data.results);
+
+                console.log(response);
+                if (response.data instanceof Array) {
                     this.setState({
-                        images: respond.data,
+                        images: response.data,
                         searchRandom: true
                     });
-                } else if (respond.data instanceof Object) {
+                } else if (response.data instanceof Object) {
                     this.setState({
-                        images: respond.data.results,
+                        images: newImages,
                         searchRandom: false
                     });
                 }
 
-                setTimeout(() => {
-                    this.imageLoaded();
-                }, 500);
+                // setTimeout(() => {
+                //     this.imageLoaded();
+                // }, 500);
 
-                this.checkMoreItems(respond.data);
+                this.checkMoreItems(response.data);
             })
             .catch((error) => {
                 console.error('FAILED!');
             });
     }
 
-    checkMoreItems = (respond) => {
-        if (this.state.images.length < respond.total) {
+    checkMoreItems = (response) => {
+        if (this.state.images.length < response.total) {
             this.setState({
                 loadMoreItems: true
             });
@@ -59,7 +59,7 @@ export default class Search extends Component {
             this.setState({
                 loadMoreItems: false
             });
-        } if (respond.total === undefined) {
+        } if (response.total === undefined) {
             this.setState({ loadMoreItems: true });
         }
     }
@@ -72,12 +72,6 @@ export default class Search extends Component {
         }
     }
 
-    imageLoaded = () => {
-        const grid = document.querySelector('.results');
-        const gridLayout = new Masonry(grid, {
-            itemSelector: '.results__item'
-        });
-    };
 
     render() {
         const { images } = this.state;
