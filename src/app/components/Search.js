@@ -16,11 +16,11 @@ export default class Search extends Component {
         this.state = {
             images: [],
             loadMoreItems: false,
-            nextPage: 1
+            searchRandom: false
         };
 
         this.requestService = this.requestService.bind(this);
-        this.loadMoreItems = this.loadMoreItems.bind(this);
+        this.loadMoreImages = this.loadMoreImages.bind(this);
     }
 
     requestService = (path) => {
@@ -28,9 +28,15 @@ export default class Search extends Component {
             .then((respond) => {
                 console.log(respond);
                 if (respond.data instanceof Array) {
-                    this.setState({ images: respond.data });
+                    this.setState({
+                        images: respond.data,
+                        searchRandom: true
+                    });
                 } else if (respond.data instanceof Object) {
-                    this.setState({ images: respond.data.results });
+                    this.setState({
+                        images: respond.data.results,
+                        searchRandom: false
+                    });
                 }
 
                 setTimeout(() => {
@@ -47,14 +53,23 @@ export default class Search extends Component {
     checkMoreItems = (respond) => {
         if (this.state.images.length < respond.total) {
             this.setState({
-                loadMoreItems: !this.state.loadMoreItems
+                loadMoreItems: true
             });
+        } else {
+            this.setState({
+                loadMoreItems: false
+            });
+        } if (respond.total === undefined) {
+            this.setState({ loadMoreItems: true });
         }
     }
 
-    loadMoreItems = () => {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=2&per_page=12&query=car}&client_id=${unsplashClient.ID}`;
-        this.refs.child.searchImages(searchByInputValue);
+    loadMoreImages = () => {
+        if (this.state.searchRandom === true) {
+            this.resultList.getNextRandomPage();
+        } else {
+            this.resultList.getNextSearchPage();
+        }
     }
 
     imageLoaded = () => {
@@ -70,7 +85,7 @@ export default class Search extends Component {
             <div>
                 <headr className="header">
                     <SearchForm
-                        ref="child"
+                        ref={(c) => { this.resultList = c; }}
                         onSearch={this.requestService}
                     />
                 </headr>
@@ -80,7 +95,7 @@ export default class Search extends Component {
                         this.state.loadMoreItems ?
                             <button
                                 className="button"
-                                onClick={this.loadMoreItems}
+                                onClick={this.loadMoreImages}
                             >
                                 LOAD MORE
                             </button> :

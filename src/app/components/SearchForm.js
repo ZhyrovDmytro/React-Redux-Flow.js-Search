@@ -15,8 +15,23 @@ export default class SearchForm extends Component {
         this.state = {
             inputValue: '',
             buttonDisabled: true,
-            pageNumber: 1
+            pageNumberToShow: 1
         };
+    }
+
+    getNextSearchPage = () => {
+        this.setState({ pageNumberToShow: this.state.pageNumberToShow += 1 });
+        const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        this.searchImages(nextSearchPage);
+    }
+
+    getNextRandomPage = () => {
+        const nextSearchPage = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
+        this.searchImages(nextSearchPage);
+    }
+
+    searchImages = (path) => {
+        this.props.onSearch(path);
     }
 
     updateInputValue = (event) => {
@@ -34,12 +49,8 @@ export default class SearchForm extends Component {
         }
     }
 
-    searchImages = (path) => {
-        this.props.onSearch(path);
-    }
-
     render() {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumber}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
         return (
