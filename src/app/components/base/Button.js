@@ -7,6 +7,7 @@ export default function button(props) {
     return (
         <button
             className={buttonClass}
+            onClick={(event) => this.handleClick(event)}
         >
             {content}
         </button>

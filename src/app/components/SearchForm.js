@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import HistoryList from './HistoryList';
 import {
     API,
     unsplashClient
@@ -15,13 +16,45 @@ export default class SearchForm extends Component {
         this.state = {
             inputValue: '',
             buttonDisabled: true,
-            pageNumber: 1
+            pageNumberToShow: 1,
+            historyListIsActive: true
         };
+    }
+
+    getNextSearchPage = () => {
+        this.setState({ pageNumberToShow: this.state.pageNumberToShow += 1 });
+        const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        this.searchImages(nextSearchPage);
+    }
+
+    getNextRandomPage = () => {
+        const nextSearchPage = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
+        this.searchImages(nextSearchPage);
+    }
+
+    searchImages = (path) => {
+        this.props.onSearch(path);
+    }
+
+    resetResultList = () => {
+        this.props.resetResultList();
+    }
+
+    handleKeyPress = (event, searchByInputValue) => {
+        if (event.keyCode === 13 && this.state.inputValue !== '') {
+            this.searchImages(searchByInputValue);
+            this.resetResultList();
+        }
+    }
+
+    openHistoryList = () => {
+        this.setState({
+            historyListIsActive: !this.state.historyListIsActive
+        });
     }
 
     updateInputValue = (event) => {
         const valueLength = event.target.value.length;
-
 
         this.setState({
             inputValue: event.currentTarget.value
@@ -34,12 +67,8 @@ export default class SearchForm extends Component {
         }
     }
 
-    searchImages = (path) => {
-        this.props.onSearch(path);
-    }
-
     render() {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumber}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
         return (
@@ -51,21 +80,37 @@ export default class SearchForm extends Component {
                         placeholder="SEARCH..."
                         value={this.state.inputValue}
                         onChange={event => this.updateInputValue(event)}
+                        onFocus={this.openHistoryList}
+                        onBlur={this.openHistoryList}
+                        onKeyDown={event => {
+                            this.handleKeyPress(event, searchByInputValue);
+
+                        }}
                     />
+                    {
+                       this.state.historyListIsActive && <HistoryList />
+                    }
                 </div>
                 <div className="search__buttons">
                     <button
                         className={
                             this.state.buttonDisabled ? 'button disabled' : 'button'
                         }
-                        onClick={() => this.searchImages(searchByInputValue)}
+                        onClick={() => {
+                            this.resetResultList();
+                            this.searchImages(searchByInputValue);
+                        }}
                         disabled={this.state.buttonDisabled}
                     >
                         { this.state.buttonDisabled ? 'DISABLED' : 'FIND' }
                     </button>
                     <button
                         className="button blue"
-                        onClick={event => this.searchImages(searchRandomImages)}
+                        onClick={event => {
+                            this.resetResultList();
+                            this.setState({ inputValue: '' });
+                            this.searchImages(searchRandomImages);
+                        }}
                     >
                         RANDOM
                     </button>

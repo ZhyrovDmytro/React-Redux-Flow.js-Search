@@ -3,7 +3,7 @@ import SearchForm from './SearchForm';
 import ResultList from './ResultList';
 import Masonry from 'masonry-layout';
 import axios from 'axios';
-import Button from './base/Button';
+import Loader from './base/Loader';
 
 import {
     API,
@@ -15,54 +15,90 @@ export default class Search extends Component {
         super(props);
         this.state = {
             images: [],
-            loadMoreItems: false,
-            nextPage: 1
+            existMoreItems: false,
+            searchRandom: false,
+            loadNextPage: false,
+            loaderIsActive: false
         };
-
-        this.requestService = this.requestService.bind(this);
-        this.loadMoreItems = this.loadMoreItems.bind(this);
     }
 
+    getPath = (response) => {
+        if (response.data instanceof Array) {
+            let newImages;
+            if (this.state.loadNextPage === true) {
+                newImages = this.state.images.concat(response.data);
+            } else {
+                newImages = response.data;
+                this.setState({ loadNextPage: false });
+            }
+
+            this.setState({
+                images: newImages,
+                searchRandom: true
+            });
+        } else if (response.data instanceof Object) {
+            let newImages;
+            if (this.state.loadNextPage === true) {
+                newImages = this.state.images.concat(response.data.results);
+            } else {
+                newImages = response.data.results;
+                this.setState({ loadNextPage: false });
+            }
+
+            this.setState({
+                images: newImages,
+                searchRandom: false
+            });
+        }
+    }
+
+    resetResultList = () => {
+        this.setState({ loadNextPage: false });
+    };
+
     requestService = (path) => {
+        this.loaderActive();
         return axios.get(path)
-            .then((respond) => {
-                console.log(respond);
-                if (respond.data instanceof Array) {
-                    this.setState({ images: respond.data });
-                } else if (respond.data instanceof Object) {
-                    this.setState({ images: respond.data.results });
-                }
+            .then((response) => {
+                this.getPath(response);
+                console.log(response);
 
-                setTimeout(() => {
-                    this.imageLoaded();
-                }, 500);
-
-                this.checkMoreItems(respond.data);
+                this.checkMoreItems(response.data);
+                this.loaderActive();
             })
             .catch((error) => {
                 console.error('FAILED!');
             });
     }
 
-    checkMoreItems = (respond) => {
-        if (this.state.images.length < respond.total) {
+    checkMoreItems = (response) => {
+        if (this.state.images.length < response.total) {
             this.setState({
-                loadMoreItems: !this.state.loadMoreItems
+                existMoreItems: true
             });
+        } else {
+            this.setState({
+                existMoreItems: false
+            });
+        } if (response.total === undefined) {
+            this.setState({ existMoreItems: true });
         }
     }
 
-    loadMoreItems = () => {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=2&per_page=12&query=car}&client_id=${unsplashClient.ID}`;
-        this.refs.child.searchImages(searchByInputValue);
+    loadMoreImages = () => {
+        if (this.state.searchRandom === true) {
+            this.resultList.getNextRandomPage();
+        } else {
+            this.resultList.getNextSearchPage();
+        }
+        this.setState({ loadNextPage: true });
     }
 
-    imageLoaded = () => {
-        const grid = document.querySelector('.results');
-        const gridLayout = new Masonry(grid, {
-            itemSelector: '.results__item'
+    loaderActive = () => {
+        this.setState({
+            loaderIsActive: !this.state.loaderIsActive
         });
-    };
+    }
 
     render() {
         const { images } = this.state;
@@ -70,17 +106,21 @@ export default class Search extends Component {
             <div>
                 <headr className="header">
                     <SearchForm
-                        ref="child"
+                        ref={(c) => { this.resultList = c; }}
                         onSearch={this.requestService}
+                        resetResultList={this.resetResultList}
                     />
                 </headr>
                 <ResultList images={images} />
+                {
+                    this.state.loaderIsActive === true && <Loader />
+                }
                 <div className="text-right">
                     {
-                        this.state.loadMoreItems ?
+                        this.state.existMoreItems ?
                             <button
                                 className="button"
-                                onClick={this.loadMoreItems}
+                                onClick={this.loadMoreImages}
                             >
                                 LOAD MORE
                             </button> :
