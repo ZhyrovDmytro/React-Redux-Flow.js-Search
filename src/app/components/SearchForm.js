@@ -41,6 +41,7 @@ export default class SearchForm extends Component {
     handleKeyPress = (event, searchByInputValue) => {
         if (event.keyCode === 13 && this.state.inputValue !== '') {
             this.searchImages(searchByInputValue);
+            this.resetResultList();
         }
     }
 
@@ -71,7 +72,10 @@ export default class SearchForm extends Component {
                         placeholder="SEARCH..."
                         value={this.state.inputValue}
                         onChange={event => this.updateInputValue(event)}
-                        onKeyDown={event => this.handleKeyPress(event, searchByInputValue)}
+                        onKeyDown={event => {
+                            this.handleKeyPress(event, searchByInputValue);
+
+                        }}
                     />
                 </div>
                 <div className="search__buttons">

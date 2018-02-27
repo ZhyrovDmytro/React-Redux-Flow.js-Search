@@ -7,7 +7,9 @@
     height: 100%;
     padding-top: 0;
     overflow: auto;
+    visibility: 1;
     background-color: rgba(255, 255, 255, .685);
+    transition: all .6s ease;
 
     &__content {
         margin: 60px 0;

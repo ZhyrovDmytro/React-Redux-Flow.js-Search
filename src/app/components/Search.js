@@ -59,7 +59,6 @@ export default class Search extends Component {
         return axios.get(path)
             .then((response) => {
                 this.getPath(response);
-
                 console.log(response);
 
                 this.checkMoreItems(response.data);
@@ -91,7 +90,6 @@ export default class Search extends Component {
         }
         this.setState({ loadNextPage: true });
     }
-
 
     render() {
         const { images } = this.state;
