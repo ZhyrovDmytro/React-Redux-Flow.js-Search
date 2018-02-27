@@ -4,10 +4,6 @@ import Masonry from 'masonry-layout';
 
 export default class ResultList extends Component {
 
-    // componentDidMount() {
-    //     this.generateGrid();
-    // }
-
     componentDidUpdate() {
         this.generateGrid();
     }

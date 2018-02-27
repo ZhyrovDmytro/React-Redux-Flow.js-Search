@@ -13,11 +13,13 @@ export default class SearchForm extends Component {
         this.updateInputValue = this.updateInputValue.bind(this);
         this.searchImages = this.searchImages.bind(this);
 
+        this.saveHistoryList = JSON.parse(localStorage.getItem(('list')));
         this.state = {
             inputValue: '',
             buttonDisabled: true,
             pageNumberToShow: 1,
-            historyListIsActive: true
+            historyListIsActive: false,
+            historyList: []
         };
     }
 
@@ -34,6 +36,9 @@ export default class SearchForm extends Component {
 
     searchImages = (path) => {
         this.props.onSearch(path);
+        this.setState({
+            historyList: [...this.state.historyList, this.state.inputValue]
+        });
     }
 
     resetResultList = () => {
@@ -71,6 +76,7 @@ export default class SearchForm extends Component {
         const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
+        const { historyList } = this.state;
         return (
             <div className="search">
                 <div className="search__form">
@@ -88,7 +94,10 @@ export default class SearchForm extends Component {
                         }}
                     />
                     {
-                       this.state.historyListIsActive && <HistoryList />
+                        this.state.historyListIsActive &&
+                        <HistoryList
+                            historyList={historyList}
+                        />
                     }
                 </div>
                 <div className="search__buttons">
