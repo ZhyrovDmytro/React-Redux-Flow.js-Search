@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import HistoryList from './HistoryList';
 import {
     API,
     unsplashClient
@@ -15,7 +16,8 @@ export default class SearchForm extends Component {
         this.state = {
             inputValue: '',
             buttonDisabled: true,
-            pageNumberToShow: 1
+            pageNumberToShow: 1,
+            historyListIsActive: true
         };
     }
 
@@ -45,6 +47,12 @@ export default class SearchForm extends Component {
         }
     }
 
+    openHistoryList = () => {
+        this.setState({
+            historyListIsActive: !this.state.historyListIsActive
+        });
+    }
+
     updateInputValue = (event) => {
         const valueLength = event.target.value.length;
 
@@ -72,11 +80,16 @@ export default class SearchForm extends Component {
                         placeholder="SEARCH..."
                         value={this.state.inputValue}
                         onChange={event => this.updateInputValue(event)}
+                        onFocus={this.openHistoryList}
+                        onBlur={this.openHistoryList}
                         onKeyDown={event => {
                             this.handleKeyPress(event, searchByInputValue);
 
                         }}
                     />
+                    {
+                       this.state.historyListIsActive && <HistoryList />
+                    }
                 </div>
                 <div className="search__buttons">
                     <button
