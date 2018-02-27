@@ -38,6 +38,12 @@ export default class SearchForm extends Component {
         this.props.resetResultList();
     }
 
+    handleKeyPress = (event, searchByInputValue) => {
+        if (event.keyCode === 13) {
+            this.searchImages(searchByInputValue);
+        }
+    }
+
     updateInputValue = (event) => {
         const valueLength = event.target.value.length;
 
@@ -65,6 +71,7 @@ export default class SearchForm extends Component {
                         placeholder="SEARCH..."
                         value={this.state.inputValue}
                         onChange={event => this.updateInputValue(event)}
+                        onKeyDown={event => this.handleKeyPress(event, searchByInputValue)}
                     />
                 </div>
                 <div className="search__buttons">
