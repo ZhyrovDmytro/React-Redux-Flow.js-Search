@@ -15,33 +15,52 @@ export default class Search extends Component {
         super(props);
         this.state = {
             images: [],
-            loadMoreItems: false,
-            searchRandom: false
+            existMoreItems: false,
+            searchRandom: false,
+            loadNextPage: false
         };
     }
+
+    getPath = (response) => {
+        if (response.data instanceof Array) {
+            let newImages;
+            if (this.state.loadNextPage === true) {
+                newImages = this.state.images.concat(response.data);
+            } else {
+                newImages = response.data;
+                this.setState({ loadNextPage: false });
+            }
+
+            this.setState({
+                images: newImages,
+                searchRandom: true
+            });
+        } else if (response.data instanceof Object) {
+            let newImages;
+            if (this.state.loadNextPage === true) {
+                newImages = this.state.images.concat(response.data.results);
+            } else {
+                newImages = response.data.results;
+                this.setState({ loadNextPage: false });
+            }
+
+            this.setState({
+                images: newImages,
+                searchRandom: false
+            });
+        }
+    }
+
+    resetResultList = () => {
+        this.setState({ loadNextPage: false });
+    };
 
     requestService = (path) => {
         return axios.get(path)
             .then((response) => {
-
-                const newImages = this.state.images.concat(response.data.results);
+                this.getPath(response);
 
                 console.log(response);
-                if (response.data instanceof Array) {
-                    this.setState({
-                        images: response.data,
-                        searchRandom: true
-                    });
-                } else if (response.data instanceof Object) {
-                    this.setState({
-                        images: newImages,
-                        searchRandom: false
-                    });
-                }
-
-                // setTimeout(() => {
-                //     this.imageLoaded();
-                // }, 500);
 
                 this.checkMoreItems(response.data);
             })
@@ -53,14 +72,14 @@ export default class Search extends Component {
     checkMoreItems = (response) => {
         if (this.state.images.length < response.total) {
             this.setState({
-                loadMoreItems: true
+                existMoreItems: true
             });
         } else {
             this.setState({
-                loadMoreItems: false
+                existMoreItems: false
             });
         } if (response.total === undefined) {
-            this.setState({ loadMoreItems: true });
+            this.setState({ existMoreItems: true });
         }
     }
 
@@ -70,6 +89,7 @@ export default class Search extends Component {
         } else {
             this.resultList.getNextSearchPage();
         }
+        this.setState({ loadNextPage: true });
     }
 
 
@@ -81,12 +101,13 @@ export default class Search extends Component {
                     <SearchForm
                         ref={(c) => { this.resultList = c; }}
                         onSearch={this.requestService}
+                        resetResultList={this.resetResultList}
                     />
                 </headr>
                 <ResultList images={images} />
                 <div className="text-right">
                     {
-                        this.state.loadMoreItems ?
+                        this.state.existMoreItems ?
                             <button
                                 className="button"
                                 onClick={this.loadMoreImages}

@@ -34,9 +34,12 @@ export default class SearchForm extends Component {
         this.props.onSearch(path);
     }
 
+    resetResultList = () => {
+        this.props.resetResultList();
+    }
+
     updateInputValue = (event) => {
         const valueLength = event.target.value.length;
-
 
         this.setState({
             inputValue: event.currentTarget.value
@@ -69,7 +72,10 @@ export default class SearchForm extends Component {
                         className={
                             this.state.buttonDisabled ? 'button disabled' : 'button'
                         }
-                        onClick={() => this.searchImages(searchByInputValue)}
+                        onClick={() => {
+                            this.resetResultList();
+                            this.searchImages(searchByInputValue);
+                        }}
                         disabled={this.state.buttonDisabled}
                     >
                         { this.state.buttonDisabled ? 'DISABLED' : 'FIND' }
@@ -77,6 +83,7 @@ export default class SearchForm extends Component {
                     <button
                         className="button blue"
                         onClick={event => {
+                            this.resetResultList();
                             this.setState({ inputValue: '' });
                             this.searchImages(searchRandomImages);
                         }}
