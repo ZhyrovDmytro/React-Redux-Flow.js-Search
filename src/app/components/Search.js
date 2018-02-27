@@ -3,7 +3,7 @@ import SearchForm from './SearchForm';
 import ResultList from './ResultList';
 import Masonry from 'masonry-layout';
 import axios from 'axios';
-import Button from './base/Button';
+import Loader from './base/Loader';
 
 import {
     API,
@@ -17,7 +17,8 @@ export default class Search extends Component {
             images: [],
             existMoreItems: false,
             searchRandom: false,
-            loadNextPage: false
+            loadNextPage: false,
+            loaderIsActive: false
         };
     }
 
@@ -56,12 +57,14 @@ export default class Search extends Component {
     };
 
     requestService = (path) => {
+        this.loaderActive();
         return axios.get(path)
             .then((response) => {
                 this.getPath(response);
                 console.log(response);
 
                 this.checkMoreItems(response.data);
+                this.loaderActive();
             })
             .catch((error) => {
                 console.error('FAILED!');
@@ -91,6 +94,12 @@ export default class Search extends Component {
         this.setState({ loadNextPage: true });
     }
 
+    loaderActive = () => {
+        this.setState({
+            loaderIsActive: !this.state.loaderIsActive
+        });
+    }
+
     render() {
         const { images } = this.state;
         return (
@@ -103,6 +112,9 @@ export default class Search extends Component {
                     />
                 </headr>
                 <ResultList images={images} />
+                {
+                    this.state.loaderIsActive === true && <Loader />
+                }
                 <div className="text-right">
                     {
                         this.state.existMoreItems ?
