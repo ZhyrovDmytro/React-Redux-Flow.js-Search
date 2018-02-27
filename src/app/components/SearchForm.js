@@ -39,7 +39,7 @@ export default class SearchForm extends Component {
     }
 
     handleKeyPress = (event, searchByInputValue) => {
-        if (event.keyCode === 13) {
+        if (event.keyCode === 13 && this.state.inputValue !== '') {
             this.searchImages(searchByInputValue);
         }
     }

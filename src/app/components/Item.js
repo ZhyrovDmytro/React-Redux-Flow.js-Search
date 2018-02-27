@@ -7,20 +7,29 @@ export default class Item extends Component {
         isOpen: false
     };
 
-    handleClick = () => {
+    openModal = () => {
         this.setState({
-            isOpen: !this.state.isOpen
+            isOpen: true
+        });
+    }
+
+    closeModal = () => {
+        this.setState({
+            isOpen: false
         });
     }
 
     render() {
         const modal = this.state.isOpen ? (
-            <ModalWindow image={this.props.image} />
+            <ModalWindow
+                image={this.props.image}
+                handleClickOutside={this.closeModal}
+            />
         ) : null;
         return (
             <picture
                 className="results__item"
-                onClick={this.handleClick}
+                onClick={this.openModal}
             >
                 <img
                     className="results__image"

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Item from './Item';
-import ModalWindow from './ModalWindow';
 import Masonry from 'masonry-layout';
 
 export default class ResultList extends Component {
