@@ -1,0 +1,27 @@
+.history {
+    position: absolute;
+    top: 40px;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 20px;
+    z-index: 10000;
+
+    @include media-breakpoint-up(md) {
+        width: 400px;
+    }
+
+    &__list {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none !important;
+    }
+
+    &__item {
+        padding: 5px 0 5px 15px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #eee;
+        }
+    }
+}

@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 
-export default () => {
+export default (props) => {
+    const createHistoryItem = [...props.historyList].map((historyItem) => {
+        return (
+            <li
+                key={`_${historyItem.id}${Math.random().toString(36).slice(-5)}`}
+                className="history__item"
+            >
+                <span>{ historyItem }</span>
+            </li>
+        );
+    });
     return (
-        <div>
-            <p>Ladsadas adad aasda sd </p>
+        <div className="history">
+            <ul className="history__list">
+                { createHistoryItem }
+            </ul>
         </div>
     );
 };
