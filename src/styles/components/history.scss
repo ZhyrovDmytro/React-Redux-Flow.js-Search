@@ -21,7 +21,9 @@
 
         &:hover {
             cursor: pointer;
+            border-radius: 20px;
             background-color: #eee;
+            overflow: hidden;
         }
     }
 }
