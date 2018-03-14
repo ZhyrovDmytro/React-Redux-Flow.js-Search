@@ -20,15 +20,15 @@ export default class Item extends Component {
     }
 
     render() {
-        const modal = this.state.isOpen ? (
+        const modal = this.state.isOpen && (
             <ModalWindow
                 image={this.props.image}
                 handleClickOutside={this.closeModal}
             />
-        ) : null;
+        );
         return (
             <picture
-                className="results__item"
+                className="js-results-item results__item"
                 onClick={this.openModal}
             >
                 <img

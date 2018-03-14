@@ -1,32 +1,40 @@
 .results {
+    display: block;
     margin-top: 10px;
+    line-height: 0;
+    text-align: center;
 
-    &::after {
-        display: block;
-        clear: both;
-        content: '';
+    @include media-breakpoint-up(md) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 
-    &__item {
-        display: block;
-        padding: $main-padding;
-        animation: ease 1s appearImage;
+    &__wrapper {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        text-align: center;
+        border-radius: $main-border-radius;
+        // animation: ease 1s appearImage;
 
         @include media-breakpoint-up(md) {
-            float: left;
-            width: 50%;
+            width: 49%;
+            height: 250px;
         }
 
         @include media-breakpoint-up(lg) {
-            width: 33.33%;
+            width: 32%;
         }
     }
 
     &__image {
         display: block;
-        max-width: 100%;
+        min-width: 100%;
+        min-height: 100%;
         margin: 0 auto;
-        border-radius: $main-border-radius;
     }
 
     @keyframes appearImage {
@@ -43,12 +51,11 @@
 
     &__info {
         position: absolute;
-        top: $main-padding;
-        right: $main-padding;
-        bottom: $main-padding;
-        left: $main-padding;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         background-image: linear-gradient(180deg, rgba(0, 0, 0, .2) 0, transparent 20%, transparent 50%, rgba(0, 0, 0, .3));
-        border-radius: $main-border-radius;
         opacity: 0;
         transition: all .15s ease-in-out;
 
@@ -90,7 +97,7 @@
 
     &__profile {
         position: absolute;
-        bottom: 10px;
+        bottom: 0;
         z-index: 1000;
         display: flex;
         align-items: center;

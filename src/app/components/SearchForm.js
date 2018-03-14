@@ -10,7 +10,6 @@ export default class SearchForm extends Component {
     constructor(props) {
         super(props);
 
-        this.saveHistoryList = JSON.parse(localStorage.getItem(('list')));
         this.state = {
             inputValue: '',
             buttonDisabled: true,
@@ -33,11 +32,10 @@ export default class SearchForm extends Component {
 
     searchImages = (path) => {
         this.props.onSearch(path);
-        this.state.inputValue !== '' ?
+        this.state.inputValue !== '' &&
             this.setState({
                 historyList: [...this.state.historyList, this.state.inputValue]
-            }) :
-            null;
+            });
     }
 
     resetResultList = () => {
@@ -69,7 +67,7 @@ export default class SearchForm extends Component {
     }
 
     updateInputValue = (event) => {
-        const valueLength = event.target.value.length;
+        const valueLength = event.target.value.trim().length;
 
         this.setState({
             inputValue: event.currentTarget.value
