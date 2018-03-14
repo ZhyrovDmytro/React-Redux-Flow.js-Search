@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 export default (props) => {
     const createHistoryItem = [...props.historyList].map((historyItem) => {
         return (
             <li
-                key={`_${historyItem.id}${Math.random().toString(36).slice(-5)}`}
+                key={`_${historyItem.id}${Math.random()}`}
                 className="history__item"
                 onMouseDown={() => props.searchByHistory(historyItem)}
                 role="menuitem"

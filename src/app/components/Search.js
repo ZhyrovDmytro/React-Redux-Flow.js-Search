@@ -72,7 +72,7 @@ export default class Search extends Component {
     }
 
     checkMoreItems = (response) => {
-        if (this.state.images.length < response.total) {
+        if (this.state.images.length < response.total || response.total === undefined) {
             this.setState({
                 existMoreItems: true
             });
@@ -80,8 +80,6 @@ export default class Search extends Component {
             this.setState({
                 existMoreItems: false
             });
-        } if (response.total === undefined) {
-            this.setState({ existMoreItems: true });
         }
     }
 
@@ -104,27 +102,26 @@ export default class Search extends Component {
         const { images } = this.state;
         return (
             <div>
-                <headr className="header">
+                <header className="header">
                     <SearchForm
                         ref={(c) => { this.resultList = c; }}
                         onSearch={this.requestService}
                         resetResultList={this.resetResultList}
                     />
-                </headr>
+                </header>
                 <ResultList images={images} />
                 {
                     this.state.loaderIsActive === true && <Loader />
                 }
                 <div className="text-right">
                     {
-                        this.state.existMoreItems ?
+                        this.state.existMoreItems &&
                             <button
                                 className="button"
                                 onClick={this.loadMoreImages}
                             >
                                 LOAD MORE
-                            </button> :
-                            null
+                            </button>
                     }
                 </div>
             </div>
