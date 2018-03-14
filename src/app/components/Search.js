@@ -13,6 +13,9 @@ import {
 export default class Search extends Component {
     constructor(props) {
         super(props);
+
+        this.saveList = JSON.parse(localStorage.getItem(('list')));
+
         this.state = {
             images: [],
             existMoreItems: false,
