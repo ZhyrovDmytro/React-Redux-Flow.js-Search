@@ -1,7 +1,8 @@
 import React from 'react';
 
 export default (props) => {
-    const historyItemsToShow = [...props.historyList.slice(1).slice(-5)];
+    const historyItemsToShow = [...props.suggestItemToShow.slice(1).slice(-5)];
+
     const createHistoryItem = historyItemsToShow.map((historyItem) => {
         return (
             <li
