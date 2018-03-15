@@ -39,7 +39,10 @@ export default class ModalWindow extends Component {
                                     </a>
                                 </picture>
                                 <p className="text-left">
-                                    <a href={this.props.image.user.links.html} className="modal__info--link link link--grey">
+                                    <a
+                                        href={this.props.image.user.links.html}
+                                        className="modal__info--link link link--grey"
+                                    >
                                         @{this.props.image.user.username}
                                     </a>
                                 </p>
@@ -48,7 +51,11 @@ export default class ModalWindow extends Component {
                         </div>
                         <figure className="modal__figure">
                             <picture>
-                                <img className="modal__image" src={this.props.image.urls.regular} alt="Unsplash" />
+                                <img
+                                    className="modal__image"
+                                    src={this.props.image.urls.regular}
+                                    alt="Unsplash"
+                                />
                             </picture>
                             <figcaption className="modal__location">
                                 {
