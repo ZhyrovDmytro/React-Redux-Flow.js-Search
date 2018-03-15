@@ -115,7 +115,6 @@ export default class SearchForm extends Component {
                     {
                         this.state.historyListIsActive &&
                         <HistoryList
-
                             suggestItemToShow={suggestItemToShow}
                             searchByHistory={this.searchByHistory}
                         />
