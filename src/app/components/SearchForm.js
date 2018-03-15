@@ -15,7 +15,7 @@ export default class SearchForm extends Component {
             buttonDisabled: true,
             pageNumberToShow: 1,
             historyListIsActive: false,
-            historyList: []
+            historyList: JSON.parse(localStorage.getItem(('list')))
         };
     }
 
@@ -36,6 +36,9 @@ export default class SearchForm extends Component {
             this.setState({
                 historyList: [...this.state.historyList, this.state.inputValue]
             });
+
+        localStorage.setItem('list', JSON.stringify(this.state.historyList));
+        // console.log(this.state.historyList);
     }
 
     resetResultList = () => {

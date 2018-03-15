@@ -12,7 +12,11 @@ export default (props) => {
                 />
                 {props.info.likes}
             </a>
-            <a className="link link--grey results__option--download" href={props.info.links.download} download>
+            <a
+                className="link link--grey results__option--download"
+                href={props.info.links.download}
+                download
+            >
                 <span>
                     Download
                 </span>
