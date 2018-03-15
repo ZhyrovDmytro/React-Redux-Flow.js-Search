@@ -15,8 +15,13 @@ export default class SearchForm extends Component {
             buttonDisabled: true,
             pageNumberToShow: 1,
             historyListIsActive: false,
-            historyList: JSON.parse(localStorage.getItem(('list')))
+            historyList: JSON.parse(localStorage.getItem(('list'))),
+            suggestionList: []
         };
+    }
+
+    componentWillUpdate() {
+        localStorage.setItem('list', JSON.stringify(this.state.historyList));
     }
 
     getNextSearchPage = () => {
@@ -36,16 +41,13 @@ export default class SearchForm extends Component {
             this.setState({
                 historyList: [...this.state.historyList, this.state.inputValue]
             });
-
-        localStorage.setItem('list', JSON.stringify(this.state.historyList));
-        // console.log(this.state.historyList);
     }
 
     resetResultList = () => {
         this.props.resetResultList();
     }
 
-    handleKeyPress = (event, searchByInputValue) => {
+    handleEnterKeyPress = (event, searchByInputValue) => {
         if (event.keyCode === 13 && this.state.inputValue !== '') {
             this.searchImages(searchByInputValue);
             this.resetResultList();
@@ -65,8 +67,8 @@ export default class SearchForm extends Component {
 
         const searchByHistoryItem = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${historyItem}&client_id=${unsplashClient.ID}`;
 
+        this.resetResultList();
         this.searchImages(searchByHistoryItem);
-
     }
 
     updateInputValue = (event) => {
@@ -88,6 +90,14 @@ export default class SearchForm extends Component {
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
         const { historyList } = this.state;
+
+        const duplicates = historyList.reverse().filter((item, index, self) => self.indexOf(item) === index);
+        const suggestItemToShow = duplicates.reverse().filter(
+            (item) => {
+                return item.toLowerCase().includes(this.state.inputValue.toLowerCase());
+            }
+        );
+
         return (
             <div className="search">
                 <div className="search__form">
@@ -100,14 +110,14 @@ export default class SearchForm extends Component {
                         onFocus={this.openHistoryList}
                         onBlur={this.openHistoryList}
                         onKeyDown={event => {
-                            this.handleKeyPress(event, searchByInputValue);
+                            this.handleEnterKeyPress(event, searchByInputValue);
 
                         }}
                     />
                     {
                         this.state.historyListIsActive &&
                         <HistoryList
-                            historyList={historyList}
+                            suggestItemToShow={suggestItemToShow}
                             searchByHistory={this.searchByHistory}
                         />
                     }

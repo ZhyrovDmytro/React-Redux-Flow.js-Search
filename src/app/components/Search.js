@@ -16,20 +16,13 @@ export default class Search extends Component {
 
         this.state = {
             images: [],
+            noImages: true,
             existMoreItems: false,
             searchRandom: false,
             loadNextPage: false,
             loaderIsActive: false
         };
     }
-
-    // componentDidMount() {
-    //     this.loaderActive();
-    // }
-
-    // componentDidUpdate() {
-    //     this.loaderActive();
-    // }
 
     getPath = (response) => {
         if (response.data instanceof Array) {
@@ -46,6 +39,7 @@ export default class Search extends Component {
                 searchRandom: true
             });
         } else if (response.data instanceof Object) {
+            this.imagesTotalCount(response.data);
             let newImages;
             if (this.state.loadNextPage === true) {
                 newImages = this.state.images.concat(response.data.results);
@@ -78,6 +72,12 @@ export default class Search extends Component {
             .catch((error) => {
                 console.error('FAILED!');
             });
+    }
+
+    imagesTotalCount = (images) => {
+        images.total === 0 ?
+            this.setState({ noImages: !this.state.noImages }) :
+            this.setState({ noImages: true });
     }
 
     checkMoreItems = (response) => {
@@ -121,6 +121,12 @@ export default class Search extends Component {
                 <ResultList images={images} />
                 {
                     this.state.loaderIsActive === true && <Loader />
+                }
+                {
+                    !this.state.noImages &&
+                        <div className="text-center mt-3">
+                            <p>No images to display :(</p>
+                        </div>
                 }
                 <div className="text-right">
                     {
