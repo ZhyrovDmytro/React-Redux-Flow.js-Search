@@ -15,7 +15,8 @@ export default class SearchForm extends Component {
             buttonDisabled: true,
             pageNumberToShow: 1,
             historyListIsActive: false,
-            historyList: JSON.parse(localStorage.getItem(('list')))
+            historyList: JSON.parse(localStorage.getItem(('list'))),
+            suggestionList: []
         };
     }
 
@@ -90,7 +91,8 @@ export default class SearchForm extends Component {
 
         const { historyList } = this.state;
 
-        const suggestItemToShow = historyList.filter(
+        const duplicates = historyList.reverse().filter((item, index, self) => self.indexOf(item) === index);
+        const suggestItemToShow = duplicates.reverse().filter(
             (item) => {
                 return item.toLowerCase().includes(this.state.inputValue.toLowerCase());
             }

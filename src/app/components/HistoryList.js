@@ -2,8 +2,7 @@ import React from 'react';
 
 export default (props) => {
 
-    const duplicates = props.suggestItemToShow.filter((item, index, self) => self.indexOf(item) === index);
-    const historyItemsToShow = duplicates.slice(0).slice(-5);
+    const historyItemsToShow = props.suggestItemToShow.slice(0).slice(-5);
 
     const createHistoryItem = historyItemsToShow.map((historyItem) => {
         return (
