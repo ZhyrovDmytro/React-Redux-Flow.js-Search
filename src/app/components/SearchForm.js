@@ -15,9 +15,11 @@ export default class SearchForm extends Component {
             buttonDisabled: true,
             pageNumberToShow: 1,
             historyListIsActive: false,
-            historyList: JSON.parse(localStorage.getItem(('list'))),
+            historyList: JSON.parse(localStorage.getItem(('list'))) || [],
             suggestionList: []
         };
+
+        // this.nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
     }
 
     componentWillUpdate() {
@@ -37,11 +39,24 @@ export default class SearchForm extends Component {
 
     searchImages = (path) => {
         this.props.onSearch(path);
+        let filteredHistoryList = this.state.historyList;
         this.state.inputValue !== '' &&
-            this.setState({
-                historyList: [...this.state.historyList, this.state.inputValue]
-            });
+        filteredHistoryList.unshift(this.state.inputValue);
+        filteredHistoryList = [...new Set(filteredHistoryList)];
+
+        this.setState({
+            historyList: filteredHistoryList
+        });
+        // this.filterHitoryList();
     }
+
+    // filterHitoryList = () => {
+    //     console.log(filteredHistoryList);
+    //     this.setState({
+    //         historyList: filteredHistoryList
+    //     });
+
+    // }
 
     resetResultList = () => {
         this.props.resetResultList();
@@ -61,14 +76,12 @@ export default class SearchForm extends Component {
     }
 
     searchByHistory = (historyItem) => {
-        this.setState({
-            inputValue: historyItem
+
+        this.setState({ inputValue: historyItem }, () => {
+            const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+            this.resetResultList();
+            this.searchImages(nextSearchPage);
         });
-
-        const searchByHistoryItem = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${historyItem}&client_id=${unsplashClient.ID}`;
-
-        this.resetResultList();
-        this.searchImages(searchByHistoryItem);
     }
 
     updateInputValue = (event) => {
@@ -86,13 +99,12 @@ export default class SearchForm extends Component {
     }
 
     render() {
-        const searchByInputValue = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+        const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
         const searchRandomImages = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
 
         const { historyList } = this.state;
 
-        const duplicates = historyList.reverse().filter((item, index, self) => self.indexOf(item) === index);
-        const suggestItemToShow = duplicates.reverse().filter(
+        const suggestItemToShow = historyList.filter(
             (item) => {
                 return item.toLowerCase().includes(this.state.inputValue.toLowerCase());
             }
@@ -110,7 +122,7 @@ export default class SearchForm extends Component {
                         onFocus={this.openHistoryList}
                         onBlur={this.openHistoryList}
                         onKeyDown={event => {
-                            this.handleEnterKeyPress(event, searchByInputValue);
+                            this.handleEnterKeyPress(event, nextSearchPage);
 
                         }}
                     />
@@ -129,7 +141,7 @@ export default class SearchForm extends Component {
                         }
                         onClick={() => {
                             this.resetResultList();
-                            this.searchImages(searchByInputValue);
+                            this.searchImages(nextSearchPage);
                         }}
                         disabled={this.state.buttonDisabled}
                     >
