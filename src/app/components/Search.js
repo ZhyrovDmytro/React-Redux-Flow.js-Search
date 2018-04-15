@@ -64,7 +64,6 @@ export default class Search extends Component {
         return axios.get(path)
             .then((response) => {
                 this.getPath(response);
-                console.log(response);
 
                 this.checkMoreItems(response.data);
                 this.loaderActive();
@@ -118,7 +117,9 @@ export default class Search extends Component {
                         resetResultList={this.resetResultList}
                     />
                 </header>
-                <ResultList images={images} />
+                <ResultList
+                    images={images}
+                />
                 {
                     this.state.loaderIsActive === true && <Loader />
                 }
