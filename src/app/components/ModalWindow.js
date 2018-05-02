@@ -33,11 +33,11 @@ export default class ModalWindow extends Component {
                     <div className="modal__item">
                         <div className="modal__profile">
                             <div className="modal__info--profile">
-                                <picture>
+                                <div>
                                     <a href={this.props.image.user.links.html}>
                                         <ProfileImage info={this.props.image} />
                                     </a>
-                                </picture>
+                                </div>
                                 <p className="text-left">
                                     <a
                                         href={this.props.image.user.links.html}

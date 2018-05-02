@@ -3,24 +3,20 @@ import React, { Component } from 'react';
 import HistoryList from './HistoryList';
 import {
     API,
-    unsplashClient
+    unsplashClient,
+    storage
 } from './../constants';
 
 export default class SearchForm extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        inputValue: '',
+        buttonDisabled: true,
+        pageNumberToShow: 1,
+        historyListIsActive: false,
+        historyList: storage.local,
+        suggestionList: []
+    };
 
-        this.state = {
-            inputValue: '',
-            buttonDisabled: true,
-            pageNumberToShow: 1,
-            historyListIsActive: false,
-            historyList: JSON.parse(localStorage.getItem(('list'))) || [],
-            suggestionList: []
-        };
-
-        // this.nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
-    }
 
     componentWillUpdate() {
         localStorage.setItem('list', JSON.stringify(this.state.historyList));
@@ -47,16 +43,7 @@ export default class SearchForm extends Component {
         this.setState({
             historyList: filteredHistoryList
         });
-        // this.filterHitoryList();
     }
-
-    // filterHitoryList = () => {
-    //     console.log(filteredHistoryList);
-    //     this.setState({
-    //         historyList: filteredHistoryList
-    //     });
-
-    // }
 
     resetResultList = () => {
         this.props.resetResultList();
