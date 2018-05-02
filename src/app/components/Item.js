@@ -1,4 +1,8 @@
+// Utitlities
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+// Components
 import ItemInfo from './ItemInfo';
 import ModalWindow from './ModalWindow';
 
@@ -42,3 +46,11 @@ export default class Item extends Component {
         );
     }
 }
+
+Item.propTypes = {
+    image: PropTypes.PropTypes.shape({
+        urls: PropTypes.PropTypes.shape({
+            small: PropTypes.string.isRequired
+        }).isRequired
+    }).isRequired
+};

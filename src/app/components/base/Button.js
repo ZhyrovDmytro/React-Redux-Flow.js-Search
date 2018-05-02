@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default function button(props) {
     const buttonClass = props.className;
@@ -12,3 +13,8 @@ export default function button(props) {
         </button>
     );
 }
+
+button.propTypes = {
+    className: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+};

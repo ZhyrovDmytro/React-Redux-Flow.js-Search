@@ -1,10 +1,13 @@
+// Utilities
+import axios from 'axios';
 import React, { Component } from 'react';
+
+// Components
 import SearchForm from './SearchForm';
 import ResultList from './ResultList';
-import Masonry from 'masonry-layout';
-import axios from 'axios';
 import Loader from './base/Loader';
 
+// Constants
 import {
     API,
     unsplashClient

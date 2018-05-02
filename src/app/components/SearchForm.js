@@ -1,6 +1,11 @@
+// Utilities
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
+// Components
 import HistoryList from './HistoryList';
+
+// Constants
 import {
     API,
     unsplashClient,
@@ -149,3 +154,8 @@ export default class SearchForm extends Component {
         );
     }
 }
+
+SearchForm.propTypes = {
+    resetResultList: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired
+};

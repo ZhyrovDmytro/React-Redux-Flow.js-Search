@@ -1,4 +1,8 @@
+// Utilities
 import React from 'react';
+import PropTypes from 'prop-types';
+
+// Components
 import InfoOptions from './InfoOptions';
 import ProfileImage from './ProfileImage';
 
@@ -22,3 +26,14 @@ export default function ItemInfo(props) {
         </div>
     );
 }
+
+ItemInfo.propTypes = {
+    info: PropTypes.PropTypes.shape({
+        links: PropTypes.PropTypes.shape({
+            html: PropTypes.string.isRequired
+        }).isRequired,
+        user: PropTypes.PropTypes.shape({
+            last_name: PropTypes.string
+        }).isRequired
+    }).isRequired
+};
