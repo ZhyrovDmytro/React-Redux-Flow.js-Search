@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default (props) => {
+const profileImage = props => {
     return (
         <img
             className="results__profile--image"
@@ -9,3 +10,15 @@ export default (props) => {
         />
     );
 };
+
+profileImage.propTypes = {
+    info: PropTypes.PropTypes.shape({
+        user: PropTypes.PropTypes.shape({
+            profile_image: PropTypes.PropTypes.shape({
+                small: PropTypes.string.isRequired
+            }).isRequired
+        }).isRequired
+    }).isRequired
+};
+
+export default profileImage;

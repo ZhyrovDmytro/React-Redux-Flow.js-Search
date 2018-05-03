@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { paths } from './../../constants';
 
 export default function icon(props) {
@@ -13,3 +14,8 @@ export default function icon(props) {
         </svg>
     );
 }
+
+icon.propTypes = {
+    className: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+};

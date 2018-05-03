@@ -1,4 +1,8 @@
+// Utilities
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+// Components
 import InfoOptions from './InfoOptions';
 import ProfileImage from './ProfileImage';
 import Icon from './base/Icon';
@@ -33,11 +37,11 @@ export default class ModalWindow extends Component {
                     <div className="modal__item">
                         <div className="modal__profile">
                             <div className="modal__info--profile">
-                                <picture>
+                                <div>
                                     <a href={this.props.image.user.links.html}>
                                         <ProfileImage info={this.props.image} />
                                     </a>
-                                </picture>
+                                </div>
                                 <p className="text-left">
                                     <a
                                         href={this.props.image.user.links.html}
@@ -75,3 +79,19 @@ export default class ModalWindow extends Component {
         );
     }
 }
+
+ModalWindow.propTypes = {
+    image: PropTypes.PropTypes.shape({
+        user: PropTypes.PropTypes.shape({
+            links: PropTypes.PropTypes.shape({
+                html: PropTypes.string.isRequired
+            }).isRequired,
+            username: PropTypes.string.isRequired,
+            location: PropTypes.string
+        }).isRequired,
+        urls: PropTypes.PropTypes.shape({
+            regular: PropTypes.string.isRequired
+        }).isRequired
+    }).isRequired
+};
+

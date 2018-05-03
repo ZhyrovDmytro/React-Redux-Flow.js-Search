@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function loader(props) {
-    const buttonClass = props.className;
+export default function loader() {
     return (
         <div className="loader" />
     );
