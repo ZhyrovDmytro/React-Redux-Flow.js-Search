@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 // Components
 import Item from './Item';
+import getRandomNumber from '../helpers/getRandomNumber';
 
-export default function resultList(props) {
+const resultList = props => {
 
     const createItem = props.images.map((image) => {
         return (
             <figure
-                key={`_${image.id}${Math.random().toString(36).slice(-5)}`}
+                key={`_${image.id}${getRandomNumber()}`}
                 className="results__wrapper"
             >
                 <Item image={image} />
@@ -23,8 +24,10 @@ export default function resultList(props) {
             { createItem }
         </div>
     );
-}
+};
 
 resultList.propTypes = {
     images: PropTypes.array.isRequired
 };
+
+export default resultList;

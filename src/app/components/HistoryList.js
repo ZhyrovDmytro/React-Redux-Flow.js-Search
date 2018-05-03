@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function historyList(props) {
+const historyList = props => {
     const historyItemsToShow = props.suggestItemToShow.slice(0, 5);
 
     const createHistoryItem = historyItemsToShow.map((historyItem) => {
@@ -26,9 +26,11 @@ export default function historyList(props) {
             </ul>
         </div>
     );
-}
+};
 
 historyList.propTypes = {
-    suggestItemToShow: PropTypes.array.isRequired,
+    suggestItemToShow: PropTypes.arrayOf(PropTypes.string).isRequired,
     searchByHistory: PropTypes.func.isRequired
 };
+
+export default historyList;

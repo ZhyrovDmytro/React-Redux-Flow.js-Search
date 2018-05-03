@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function profileImage(props) {
+const profileImage = props => {
     return (
         <img
             className="results__profile--image"
@@ -9,7 +9,7 @@ export default function profileImage(props) {
             alt=""
         />
     );
-}
+};
 
 profileImage.propTypes = {
     info: PropTypes.PropTypes.shape({
@@ -20,3 +20,5 @@ profileImage.propTypes = {
         }).isRequired
     }).isRequired
 };
+
+export default profileImage;

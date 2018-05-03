@@ -6,7 +6,7 @@ import ReactSVG from 'react-svg';
 // Components
 import Icon from './base/Icon';
 
-export default function infoOptions(props) {
+const infoOptions = props => {
     return (
         <div className="results__option">
             <a href={props.info.links.html} className="link link--grey results__option--like">
@@ -27,7 +27,7 @@ export default function infoOptions(props) {
             </a>
         </div>
     );
-}
+};
 
 infoOptions.propTypes = {
     info: PropTypes.PropTypes.shape({
@@ -38,3 +38,5 @@ infoOptions.propTypes = {
         likes: PropTypes.number.isRequired
     }).isRequired
 };
+
+export default infoOptions;

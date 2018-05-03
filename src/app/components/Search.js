@@ -59,13 +59,13 @@ export default class Search extends Component {
     };
 
     requestService = (path) => {
-        this.activateLoadre();
+        this.toggleLoader();
         return axios.get(path)
             .then((response) => {
                 this.getPath(response);
 
                 this.checkMoreItems(response.data);
-                this.activateLoadre();
+                this.toggleLoader();
             })
             .catch((error) => {
                 console.error('FAILED!');
@@ -97,7 +97,7 @@ export default class Search extends Component {
         this.setState({ loadNextPage: true });
     }
 
-    activateLoadre = () => {
+    toggleLoader = () => {
         this.setState({
             loaderIsActive: !this.state.loaderIsActive
         });
@@ -107,9 +107,9 @@ export default class Search extends Component {
         const { images } = this.state;
         const loader = this.state.loaderIsActive === true && <Loader />;
         const noImages = !this.state.noImages &&
-                            <div className="text-center mt-3">
-                                <p>No images to display :(</p>
-                            </div>;
+            (<div className="text-center mt-3">
+                <p>No images to display :(</p>
+            </div>);
         const moreItemsButton = this.state.existMoreItems &&
                                 <button
                                     className="button"

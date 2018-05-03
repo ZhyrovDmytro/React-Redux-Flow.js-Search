@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import InfoOptions from './InfoOptions';
 import ProfileImage from './ProfileImage';
 
-export default function ItemInfo(props) {
+const ItemInfo = props => {
 
     return (
         <div className="results__info">
@@ -25,7 +25,7 @@ export default function ItemInfo(props) {
             </div>
         </div>
     );
-}
+};
 
 ItemInfo.propTypes = {
     info: PropTypes.PropTypes.shape({
@@ -37,3 +37,5 @@ ItemInfo.propTypes = {
         }).isRequired
     }).isRequired
 };
+
+export default ItemInfo;
