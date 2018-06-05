@@ -15,7 +15,11 @@ export default function requestServiceRedux(path) {
 
         axios.get(path)
             .then(response => {
-                dispatch(getImages(response.data));
+                if (response.data instanceof Array) {
+                    dispatch(getImages(response.data));
+                } else if (response.data instanceof Object) {
+                    dispatch(getImages(response.data.results));
+                }
             })
             .catch((error) => {
                 console.log('error');

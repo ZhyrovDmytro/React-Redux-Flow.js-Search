@@ -40,24 +40,24 @@ export default class SearchForm extends Component {
 
     searchImages = (path) => {
         this.props.onSearch(path);
-        let filteredHistoryList = this.state.historyList;
-        this.state.inputValue !== '' &&
-            filteredHistoryList.unshift(this.state.inputValue);
-            filteredHistoryList = [...new Set(filteredHistoryList)];
+        // let filteredHistoryList = this.state.historyList;
+        // this.state.inputValue !== '' &&
+        //     filteredHistoryList.unshift(this.state.inputValue);
+        //     filteredHistoryList = [...new Set(filteredHistoryList)];
 
-        this.setState({
-            historyList: filteredHistoryList
-        });
+        // this.setState({
+        //     historyList: filteredHistoryList
+        // });
     }
 
-    resetResultList = () => {
-        this.props.resetResultList();
-    }
+    // resetResultList = () => {
+    //     this.props.resetResultList();
+    // }
 
     handleEnterKeyPress = (event, searchByInputValue) => {
         if (event.keyCode === 13 && this.state.inputValue !== '') {
             this.searchImages(searchByInputValue);
-            this.resetResultList();
+            // this.resetResultList();
         }
     }
 
@@ -71,7 +71,7 @@ export default class SearchForm extends Component {
 
         this.setState({ inputValue: historyItem }, () => {
             const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
-            this.resetResultList();
+            // this.resetResultList();
             this.searchImages(nextSearchPage);
         });
     }
@@ -132,7 +132,7 @@ export default class SearchForm extends Component {
                             this.state.buttonDisabled ? 'button disabled' : 'button'
                         }
                         onClick={() => {
-                            this.resetResultList();
+                            // this.resetResultList();
                             this.searchImages(nextSearchPage);
                         }}
                         disabled={this.state.buttonDisabled}
