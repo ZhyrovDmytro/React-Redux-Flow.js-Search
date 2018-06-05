@@ -42,8 +42,8 @@ export default class SearchForm extends Component {
         this.props.onSearch(path);
         let filteredHistoryList = this.state.historyList;
         this.state.inputValue !== '' &&
-        filteredHistoryList.unshift(this.state.inputValue);
-        filteredHistoryList = [...new Set(filteredHistoryList)];
+            filteredHistoryList.unshift(this.state.inputValue);
+            filteredHistoryList = [...new Set(filteredHistoryList)];
 
         this.setState({
             historyList: filteredHistoryList
@@ -142,8 +142,8 @@ export default class SearchForm extends Component {
                     <button
                         className="button blue"
                         onClick={event => {
-                            this.resetResultList();
-                            this.setState({ inputValue: '' });
+                            // this.resetResultList();
+                            // this.setState({ inputValue: '' });
                             this.searchImages(searchRandomImages);
                         }}
                     >
@@ -156,6 +156,6 @@ export default class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-    resetResultList: PropTypes.func.isRequired,
+    // resetResultList: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired
 };
