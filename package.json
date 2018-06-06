@@ -86,6 +86,7 @@
     "react-svg": "^2.2.13",
     "react-svg-loader": "^2.1.0",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "require-dir": "^0.3.2",
     "run-sequence": "^2.1.0",
