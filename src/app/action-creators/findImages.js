@@ -5,10 +5,11 @@ import axios from 'axios';
 import {
     LOAD_IMAGES,
     LOAD_IMAGES_ERROR,
-    RECEIVE_IMAGES
+    RECEIVE_IMAGES,
+    LOAD_RANDOM_IMAGES
 } from '../constants';
 
-export default function requestServiceRedux(path) {
+export default function findImages(path) {
 
     return dispatch => {
         dispatch(receiveImages());
@@ -16,7 +17,7 @@ export default function requestServiceRedux(path) {
         axios.get(path)
             .then(response => {
                 if (response.data instanceof Array) {
-                    dispatch(getImages(response.data));
+                    dispatch(getRandomImages(response.data));
                 } else if (response.data instanceof Object) {
                     dispatch(getImages(response.data.results));
                 }
@@ -31,6 +32,13 @@ export default function requestServiceRedux(path) {
 export function getImages(images) {
     return {
         type: LOAD_IMAGES,
+        data: images
+    };
+}
+
+export function getRandomImages(images) {
+    return {
+        type: LOAD_RANDOM_IMAGES,
         data: images
     };
 }

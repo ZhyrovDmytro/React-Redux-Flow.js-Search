@@ -19,4 +19,5 @@ export const unsplashClient = {
 
 export const LOAD_IMAGES = 'LOAD_IMAGES';
 export const LOAD_IMAGES_ERROR = 'LOAD_IMAGES_ERROR';
+export const LOAD_RANDOM_IMAGES = 'LOAD_MORE_IMAGES';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';

@@ -41,7 +41,6 @@
     </main>
 
     {# Scripts #}
-
     <script>
         var config = {};
     </script>

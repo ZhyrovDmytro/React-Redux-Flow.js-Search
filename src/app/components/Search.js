@@ -1,9 +1,10 @@
 // Utilities
 import axios from 'axios';
 import React, { Component } from 'react';
-import requestServiceRedux from '../action-creators/requestService';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
+// Actions
+import findImages from '../action-creators/findImages';
 
 // Components
 import SearchForm from './SearchForm';
@@ -34,20 +35,20 @@ class Search extends Component {
     //             searchRandom: true
     //         });
     //     } else if (response instanceof Object) {
-    //         console.log('object');
-    //         this.checkImagesTotalCount(response.data);
+    //         console.log('response');
+    //         // this.checkImagesTotalCount(response.data);
     //         let newImages;
-    //         if (this.state.loadNextPage === true) {
-    //             newImages = this.state.images.concat(response.data.results);
-    //         } else {
+    //         // if (this.state.loadNextPage === true) {
+    //         //     newImages = this.state.images.concat(response.data.results);
+    //         // } else {
     //             newImages = response.data.results;
-    //             this.setState({ loadNextPage: false });
-    //         }
+    //         //     this.setState({ loadNextPage: false });
+    //         // }
 
-    //         this.setState({
-    //             images: newImages,
-    //             searchRandom: false
-    //         });
+    //         // this.setState({
+    //         //     images: newImages,
+    //         //     searchRandom: false
+    //         // });
     //     }
     // }
 
@@ -85,39 +86,41 @@ class Search extends Component {
     //     }
     // }
 
-    // loadMoreImages = () => {
-    //     if (this.props.searchRandom === true) {
-    //         this.resultList.getNextRandomPage();
-    //     } else {
-    //         this.resultList.getNextSearchPage();
-    //     }
-    //     this.setState({ loadNextPage: true });
-    // }
+    loadMoreImages = () => {
+        if (this.props.requestService.loadRandomImages) {
+            this.resultList.getNextRandomPage();
+        } else {
+            this.resultList.getNextSearchPage();
+        }
+        // this.setState({ loadNextPage: true });
+    }
 
     // toggleLoader = () => {
     //     this.props.requestService.isFetching && !this.props.requestService.isFetching;
     // }
 
     render() {
-        const { isFetching, images } = this.props.requestService;
+        const { isFetching, images, existMoreItems } = this.props.requestService;
         const loader = isFetching && <Loader />;
         // const noImages = this.props.noImages === true &&
         //     (<div className="text-center mt-3">
         //         <p>No images to display :(</p>
         //     </div>);
-        // const moreItemsButton = this.props.requestService.existMoreItems === true &&
-        //                         <button
-        //                             className="button"
-        //                             onClick={this.loadMoreImages}
-        //                         >
-        //                             LOAD MORE
-        //                         </button>;
+        const moreItemsButton = existMoreItems && (
+            <button
+                className="button"
+                onClick={this.loadMoreImages}
+            >
+                LOAD MORE
+            </button>
+        );
+
         return (
             <div>
                 <header className="header">
                     <SearchForm
                         ref={(c) => { this.resultList = c; }}
-                        onSearch={this.props.requestServiceRedux}
+                        onSearch={this.props.findImages}
                         // resetResultList={this.resetResultList}
                     />
                 </header>
@@ -126,9 +129,9 @@ class Search extends Component {
                 />
                 {loader}
                 {/* {noImages} */}
-                {/* <div className="text-right">
+                <div className="text-right mb-5">
                     {moreItemsButton}
-                </div> */}
+                </div>
             </div>
         );
     }
@@ -141,6 +144,6 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     {
-        requestServiceRedux
+        findImages
     }
 )(Search);

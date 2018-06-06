@@ -30,12 +30,12 @@ export default class SearchForm extends Component {
     getNextSearchPage = () => {
         this.setState({ pageNumberToShow: this.state.pageNumberToShow += 1 });
         const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
-        this.searchImages(nextSearchPage);
+        this.loadMoreItems(nextSearchPage);
     }
 
     getNextRandomPage = () => {
         const nextSearchPage = `${API.SEARCH_ITEMS_RANDOM}?count=12&client_id=${unsplashClient.ID}`;
-        this.searchImages(nextSearchPage);
+        this.loadMoreItems(nextSearchPage);
     }
 
     searchImages = (path) => {
@@ -48,6 +48,10 @@ export default class SearchForm extends Component {
         // this.setState({
         //     historyList: filteredHistoryList
         // });
+    }
+
+    loadMoreItems = (path) => {
+        this.props.onSearch(path);
     }
 
     // resetResultList = () => {
