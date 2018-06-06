@@ -100,12 +100,12 @@ class Search extends Component {
     // }
 
     render() {
-        const { isFetching, images, existMoreItems } = this.props.requestService;
+        const { isFetching, images, existMoreItems, noImages } = this.props.requestService;
         const loader = isFetching && <Loader />;
-        // const noImages = this.props.noImages === true &&
-        //     (<div className="text-center mt-3">
-        //         <p>No images to display :(</p>
-        //     </div>);
+        const noImagesToShow = noImages &&
+            (<div className="text-center mt-3">
+                <p>No images to display :(</p>
+            </div>);
         const moreItemsButton = existMoreItems && (
             <button
                 className="button"
@@ -128,7 +128,7 @@ class Search extends Component {
                     images={images}
                 />
                 {loader}
-                {/* {noImages} */}
+                {noImagesToShow}
                 <div className="text-right mb-5">
                     {moreItemsButton}
                 </div>

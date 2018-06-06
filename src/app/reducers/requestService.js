@@ -12,7 +12,8 @@ const defaultState = {
     images: [],
     isFetching: false,
     existMoreItems: false,
-    loadRandomImages: false
+    loadRandomImages: false,
+    noImages: false
 };
 
 export default function requstService(state = defaultState, action) {
@@ -21,12 +22,20 @@ export default function requstService(state = defaultState, action) {
     switch (type) {
         case LOAD_IMAGES: {
             const { response } = data;
+            if (data.length !== 0) {
+                return {
+                    ...state,
+                    images: state.images.concat(data),
+                    isFetching: false,
+                    existMoreItems: true,
+                    loadRandomImages: false
+                };
+            }
+
             return {
                 ...state,
-                images: state.images.concat(data),
                 isFetching: false,
-                existMoreItems: true,
-                loadRandomImages: false
+                noImages: true
             };
         }
         case LOAD_RANDOM_IMAGES: {
