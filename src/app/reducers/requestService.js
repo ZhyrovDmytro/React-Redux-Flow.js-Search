@@ -5,6 +5,7 @@ import {
     LOAD_IMAGES_ERROR,
     LOAD_MORE_IMAGES,
     LOAD_RANDOM_IMAGES,
+    LOAD_MORE_RANDOM_IMAGES,
     RECEIVE_IMAGES
 } from '../constants';
 
@@ -13,7 +14,8 @@ const defaultState = {
     isFetching: false,
     existMoreItems: false,
     loadRandomImages: false,
-    noImages: false
+    noImages: false,
+    loadMoreImages: false
 };
 
 export default function requstService(state = defaultState, action) {
@@ -24,23 +26,40 @@ export default function requstService(state = defaultState, action) {
             const { response } = data;
             if (data.length !== 0) {
                 return {
-                    ...state,
-                    images: state.images.concat(data),
+                    images: data,
                     isFetching: false,
-                    existMoreItems: true,
-                    loadRandomImages: false
+                    existMoreItems: true
                 };
             }
-
             return {
                 ...state,
+                noImages: true,
                 isFetching: false,
-                noImages: true
             };
         }
         case LOAD_RANDOM_IMAGES: {
             const { response } = data;
             return {
+                images: data,
+                isFetching: false,
+                existMoreItems: true,
+                loadRandomImages: true
+            };
+        }
+        case LOAD_MORE_IMAGES: {
+            const { response } = data;
+            return {
+                ...state,
+                images: state.images.concat(data),
+                isFetching: false,
+                loadRandomImages: false,
+                existMoreItems: true
+            };
+        }
+        case LOAD_MORE_RANDOM_IMAGES: {
+            const { response } = data;
+            return {
+                ...state,
                 images: state.images.concat(data),
                 isFetching: false,
                 existMoreItems: true,

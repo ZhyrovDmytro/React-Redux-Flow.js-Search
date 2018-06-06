@@ -51,17 +51,12 @@ export default class SearchForm extends Component {
     }
 
     loadMoreItems = (path) => {
-        this.props.onSearch(path);
+        this.props.loadMore(path);
     }
-
-    // resetResultList = () => {
-    //     this.props.resetResultList();
-    // }
 
     handleEnterKeyPress = (event, searchByInputValue) => {
         if (event.keyCode === 13 && this.state.inputValue !== '') {
             this.searchImages(searchByInputValue);
-            // this.resetResultList();
         }
     }
 
@@ -75,7 +70,6 @@ export default class SearchForm extends Component {
 
         this.setState({ inputValue: historyItem }, () => {
             const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
-            // this.resetResultList();
             this.searchImages(nextSearchPage);
         });
     }
@@ -136,7 +130,6 @@ export default class SearchForm extends Component {
                             this.state.buttonDisabled ? 'button disabled' : 'button'
                         }
                         onClick={() => {
-                            // this.resetResultList();
                             this.searchImages(nextSearchPage);
                         }}
                         disabled={this.state.buttonDisabled}
@@ -146,8 +139,6 @@ export default class SearchForm extends Component {
                     <button
                         className="button blue"
                         onClick={event => {
-                            // this.resetResultList();
-                            // this.setState({ inputValue: '' });
                             this.searchImages(searchRandomImages);
                         }}
                     >
@@ -160,6 +151,5 @@ export default class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-    // resetResultList: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired
 };

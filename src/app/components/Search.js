@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 // Actions
 import findImages from '../action-creators/findImages';
+import loadMore from '../action-creators/loadMore';
 
 // Components
 import SearchForm from './SearchForm';
@@ -92,7 +93,6 @@ class Search extends Component {
         } else {
             this.resultList.getNextSearchPage();
         }
-        // this.setState({ loadNextPage: true });
     }
 
     // toggleLoader = () => {
@@ -120,8 +120,8 @@ class Search extends Component {
                 <header className="header">
                     <SearchForm
                         ref={(c) => { this.resultList = c; }}
+                        loadMore={this.props.loadMore}
                         onSearch={this.props.findImages}
-                        // resetResultList={this.resetResultList}
                     />
                 </header>
                 <ResultList
@@ -144,6 +144,7 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     {
-        findImages
+        findImages,
+        loadMore
     }
 )(Search);
