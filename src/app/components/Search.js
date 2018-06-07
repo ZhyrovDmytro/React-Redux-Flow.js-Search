@@ -20,73 +20,6 @@ import {
 
 class Search extends Component {
 
-    // getPath = (response) => {
-    //     if (response instanceof Array) {
-    //         console.log('array');
-    //         let newImages;
-    //         if (this.props.loadNextPage === true) {
-    //             newImages = this.props.requestService.images.concat(response);
-    //         } else {
-    //             newImages = response.data;
-    //             this.setState({ loadNextPage: false });
-    //         }
-
-    //         this.setState({
-    //             images: newImages,
-    //             searchRandom: true
-    //         });
-    //     } else if (response instanceof Object) {
-    //         console.log('response');
-    //         // this.checkImagesTotalCount(response.data);
-    //         let newImages;
-    //         // if (this.state.loadNextPage === true) {
-    //         //     newImages = this.state.images.concat(response.data.results);
-    //         // } else {
-    //             newImages = response.data.results;
-    //         //     this.setState({ loadNextPage: false });
-    //         // }
-
-    //         // this.setState({
-    //         //     images: newImages,
-    //         //     searchRandom: false
-    //         // });
-    //     }
-    // }
-
-    // resetResultList = () => {
-    //     this.setState({ loadNextPage: false });
-    // };
-
-    // requestService = (path) => {
-    //     this.toggleLoader();
-    //     return axios.get(path)
-    //         .then((response) => {
-    //             this.getPath(response);
-
-    //             this.checkMoreItems(response.data);
-    //             this.toggleLoader();
-    //         })
-    //         .catch((error) => {
-    //             console.error('FAILED!');
-    //         });
-    // }
-
-    // checkImagesTotalCount = (images) => {
-    //     images.total === 0 && this.setState({ noImages: false });
-    // }
-
-    // checkMoreItems = (response) => {
-    //     if (this.state.images.length < response.total || response.total === undefined) {
-    //         this.setState({
-    //             existMoreItems: true
-    //         });
-    //     } else {
-    //         this.setState({
-    //             existMoreItems: false
-    //         });
-    //     }
-    // }
-
     loadMoreImages = () => {
         if (this.props.requestService.loadRandomImages) {
             this.resultList.getNextRandomPage();
@@ -94,10 +27,6 @@ class Search extends Component {
             this.resultList.getNextSearchPage();
         }
     }
-
-    // toggleLoader = () => {
-    //     this.props.requestService.isFetching && !this.props.requestService.isFetching;
-    // }
 
     render() {
         const { isFetching, images, existMoreItems, noImages } = this.props.requestService;
