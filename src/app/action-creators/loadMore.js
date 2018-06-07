@@ -25,7 +25,7 @@ export default function findImages(path) {
                 }
             })
             .catch((error) => {
-                console.log('error');
+                console.log(error);
                 dispatch(noImages());
             });
     };

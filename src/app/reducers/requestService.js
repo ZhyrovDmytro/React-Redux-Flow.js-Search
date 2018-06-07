@@ -23,22 +23,22 @@ export default function requstService(state = defaultState, action) {
 
     switch (type) {
         case LOAD_IMAGES: {
-            const { response } = data;
             if (data.length !== 0) {
                 return {
                     images: data,
                     isFetching: false,
-                    existMoreItems: true
+                    existMoreItems: true,
+                    loadRandomImages: false
                 };
             }
             return {
                 ...state,
                 noImages: true,
                 isFetching: false,
+                loadRandomImages: false
             };
         }
         case LOAD_RANDOM_IMAGES: {
-            const { response } = data;
             return {
                 images: data,
                 isFetching: false,
@@ -47,7 +47,6 @@ export default function requstService(state = defaultState, action) {
             };
         }
         case LOAD_MORE_IMAGES: {
-            const { response } = data;
             return {
                 ...state,
                 images: state.images.concat(data),
@@ -57,7 +56,6 @@ export default function requstService(state = defaultState, action) {
             };
         }
         case LOAD_MORE_RANDOM_IMAGES: {
-            const { response } = data;
             return {
                 ...state,
                 images: state.images.concat(data),

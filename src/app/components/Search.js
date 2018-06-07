@@ -122,6 +122,7 @@ class Search extends Component {
                         ref={(c) => { this.resultList = c; }}
                         loadMore={this.props.loadMore}
                         onSearch={this.props.findImages}
+                        clearQuery={this.props.requestService.loadRandomImages}
                     />
                 </header>
                 <ResultList

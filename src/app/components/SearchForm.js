@@ -22,6 +22,11 @@ export default class SearchForm extends Component {
         suggestionList: []
     };
 
+    componentWillReceiveProps(nextProps) {
+        nextProps.clearQuery === true && this.setState({
+            inputValue: ''
+        });
+    }
 
     componentWillUpdate() {
         localStorage.setItem('list', JSON.stringify(this.state.historyList));
@@ -40,14 +45,14 @@ export default class SearchForm extends Component {
 
     searchImages = (path) => {
         this.props.onSearch(path);
-        // let filteredHistoryList = this.state.historyList;
-        // this.state.inputValue !== '' &&
-        //     filteredHistoryList.unshift(this.state.inputValue);
-        //     filteredHistoryList = [...new Set(filteredHistoryList)];
+        let filteredHistoryList = this.state.historyList;
+        this.state.inputValue !== '' &&
+            filteredHistoryList.unshift(this.state.inputValue);
+        filteredHistoryList = [...new Set(filteredHistoryList)];
 
-        // this.setState({
-        //     historyList: filteredHistoryList
-        // });
+        this.setState({
+            historyList: filteredHistoryList
+        });
     }
 
     loadMoreItems = (path) => {
