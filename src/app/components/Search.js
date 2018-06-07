@@ -1,6 +1,11 @@
 // Utilities
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+// Actions
+import findImages from '../action-creators/findImages';
+import loadMore from '../action-creators/loadMore';
 
 // Components
 import SearchForm from './SearchForm';
@@ -13,128 +18,63 @@ import {
     unsplashClient
 } from './../constants';
 
-export default class Search extends Component {
-    state = {
-        images: [],
-        noImages: true,
-        existMoreItems: false,
-        searchRandom: false,
-        loadNextPage: false,
-        loaderIsActive: false
-    };
-
-    getPath = (response) => {
-        if (response.data instanceof Array) {
-            let newImages;
-            if (this.state.loadNextPage === true) {
-                newImages = this.state.images.concat(response.data);
-            } else {
-                newImages = response.data;
-                this.setState({ loadNextPage: false });
-            }
-
-            this.setState({
-                images: newImages,
-                searchRandom: true
-            });
-        } else if (response.data instanceof Object) {
-            this.checkImagesTotalCount(response.data);
-            let newImages;
-            if (this.state.loadNextPage === true) {
-                newImages = this.state.images.concat(response.data.results);
-            } else {
-                newImages = response.data.results;
-                this.setState({ loadNextPage: false });
-            }
-
-            this.setState({
-                images: newImages,
-                searchRandom: false
-            });
-        }
-    }
-
-    resetResultList = () => {
-        this.setState({ loadNextPage: false });
-    };
-
-    requestService = (path) => {
-        this.toggleLoader();
-        return axios.get(path)
-            .then((response) => {
-                this.getPath(response);
-
-                this.checkMoreItems(response.data);
-                this.toggleLoader();
-            })
-            .catch((error) => {
-                console.error('FAILED!');
-            });
-    }
-
-    checkImagesTotalCount = (images) => {
-        images.total === 0 && this.setState({ noImages: false });
-    }
-
-    checkMoreItems = (response) => {
-        if (this.state.images.length < response.total || response.total === undefined) {
-            this.setState({
-                existMoreItems: true
-            });
-        } else {
-            this.setState({
-                existMoreItems: false
-            });
-        }
-    }
+class Search extends Component {
 
     loadMoreImages = () => {
-        if (this.state.searchRandom === true) {
+        if (this.props.requestService.loadRandomImages) {
             this.resultList.getNextRandomPage();
         } else {
             this.resultList.getNextSearchPage();
         }
-        this.setState({ loadNextPage: true });
-    }
-
-    toggleLoader = () => {
-        this.setState({
-            loaderIsActive: !this.state.loaderIsActive
-        });
     }
 
     render() {
-        const { images } = this.state;
-        const loader = this.state.loaderIsActive === true && <Loader />;
-        const noImages = !this.state.noImages &&
+        const { isFetching, images, existMoreItems, noImages } = this.props.requestService;
+        const loader = isFetching && <Loader />;
+        const noImagesToShow = noImages &&
             (<div className="text-center mt-3">
                 <p>No images to display :(</p>
             </div>);
-        const moreItemsButton = this.state.existMoreItems &&
-                                <button
-                                    className="button"
-                                    onClick={this.loadMoreImages}
-                                >
-                                    LOAD MORE
-                                </button>;
+        const moreItemsButton = existMoreItems && (
+            <button
+                className="button"
+                onClick={this.loadMoreImages}
+            >
+                LOAD MORE
+            </button>
+        );
+
         return (
             <div>
                 <header className="header">
                     <SearchForm
                         ref={(c) => { this.resultList = c; }}
-                        onSearch={this.requestService}
-                        resetResultList={this.resetResultList}
+                        loadMore={this.props.loadMore}
+                        onSearch={this.props.findImages}
+                        clearQuery={this.props.requestService.loadRandomImages}
                     />
                 </header>
                 <ResultList
                     images={images}
                 />
                 {loader}
-                {noImages}
-                <div className="text-right">
+                {noImagesToShow}
+                <div className="text-right mb-5">
                     {moreItemsButton}
                 </div>
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(
+    mapStateToProps,
+    {
+        findImages,
+        loadMore
+    }
+)(Search);
