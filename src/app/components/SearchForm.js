@@ -12,13 +12,7 @@ import {
     unsplashClient,
     storage
 } from './../constants';
-
-declare type ElementEventTemplate<E> = {
-    target: E,
-    currentTarget: E
-  } & Event;
-
-declare type InputEvent = ElementEventTemplate<HTMLInputElement>;
+import type { InputEvent } from './customLibrary';
 
 type PropsType = {
     onSearch: Function,
