@@ -1,12 +1,17 @@
+// @flow
+
 // Utilities
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // Components
 import InfoOptions from './InfoOptions';
 import ProfileImage from './ProfileImage';
 
-const ItemInfo = props => {
+type PropsType = {
+    info: Object
+}
+
+const ItemInfo = (props: PropsType) => {
 
     return (
         <div className="results__info">
@@ -25,17 +30,6 @@ const ItemInfo = props => {
             </div>
         </div>
     );
-};
-
-ItemInfo.propTypes = {
-    info: PropTypes.PropTypes.shape({
-        links: PropTypes.PropTypes.shape({
-            html: PropTypes.string.isRequired
-        }).isRequired,
-        user: PropTypes.PropTypes.shape({
-            last_name: PropTypes.string
-        }).isRequired
-    }).isRequired
 };
 
 export default ItemInfo;

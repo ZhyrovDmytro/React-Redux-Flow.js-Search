@@ -8,7 +8,7 @@ import Item from './Item';
 import getRandomNumber from '../helpers/getRandomNumber';
 
 type Props = {
-    images: Array<any>
+    images: Array<Object>
 }
 
 const resultList = (props: Props) => {

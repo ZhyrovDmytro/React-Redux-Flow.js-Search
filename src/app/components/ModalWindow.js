@@ -32,7 +32,6 @@ export default class ModalWindow extends Component<PropsType> {
     }
 
     setWrapperRef = (node?: Element | null) => {
-        console.log(this.wrapperRef);
         this.wrapperRef = node;
     }
 
@@ -99,19 +98,3 @@ export default class ModalWindow extends Component<PropsType> {
         );
     }
 }
-
-// ModalWindow.propTypes = {
-//     image: PropTypes.PropTypes.shape({
-//         user: PropTypes.PropTypes.shape({
-//             links: PropTypes.PropTypes.shape({
-//                 html: PropTypes.string.isRequired
-//             }).isRequired,
-//             username: PropTypes.string.isRequired,
-//             location: PropTypes.string
-//         }).isRequired,
-//         urls: PropTypes.PropTypes.shape({
-//             regular: PropTypes.string.isRequired
-//         }).isRequired
-//     }).isRequired
-// };
-

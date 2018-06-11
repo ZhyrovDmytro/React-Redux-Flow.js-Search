@@ -26,7 +26,7 @@ type StateType = {
     pageNumberToShow: number,
     historyListIsActive: boolean,
     historyList: Array<string>,
-    suggestionList: Array<any>
+    suggestionList: Array<string>
 }
 
 export default class SearchForm extends Component<PropsType, StateType> {
@@ -94,7 +94,7 @@ export default class SearchForm extends Component<PropsType, StateType> {
     searchByHistory = (historyItem: string) => {
 
         this.setState({ inputValue: historyItem }, () => {
-            const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
+            const nextSearchPage: string = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
             this.searchImages(nextSearchPage);
         });
     }
@@ -103,7 +103,7 @@ export default class SearchForm extends Component<PropsType, StateType> {
         const target = event.target;
         const currentTarget = event.currentTarget;
 
-        const valueLength = target.value.trim().length;
+        const valueLength: number = target.value.trim().length;
 
         this.setState({
             inputValue: currentTarget.value
