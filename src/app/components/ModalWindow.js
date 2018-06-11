@@ -10,16 +10,7 @@ import Icon from './base/Icon';
 
 type PropsType = {
     image: Object,
-    user: Object,
-    links: Object,
-    urls: Object,
-    html: string,
-    small: string,
-    username: string,
-    location: string,
-    regular: string,
-    handleClickOutside: Function,
-    wrapperRef: Element | null
+    handleClickOutside: Function
 }
 
 export default class ModalWindow extends Component<PropsType> {
