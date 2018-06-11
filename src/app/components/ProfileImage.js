@@ -1,7 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
 
-const profileImage = props => {
+import React from 'react';
+
+type Props = {
+    info: Object,
+    profile_image: Object,
+    small: string
+}
+
+const profileImage = (props: Props) => {
     return (
         <img
             className="results__profile--image"
@@ -9,16 +16,6 @@ const profileImage = props => {
             alt=""
         />
     );
-};
-
-profileImage.propTypes = {
-    info: PropTypes.PropTypes.shape({
-        user: PropTypes.PropTypes.shape({
-            profile_image: PropTypes.PropTypes.shape({
-                small: PropTypes.string.isRequired
-            }).isRequired
-        }).isRequired
-    }).isRequired
 };
 
 export default profileImage;

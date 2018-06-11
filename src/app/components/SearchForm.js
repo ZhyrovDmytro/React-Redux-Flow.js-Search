@@ -12,7 +12,7 @@ import {
     unsplashClient,
     storage
 } from './../constants';
-import type { InputEvent } from './customLibrary';
+import type { InputEvent } from 'customLibrary';
 
 type PropsType = {
     onSearch: Function,
