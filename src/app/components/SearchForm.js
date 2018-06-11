@@ -1,6 +1,7 @@
+// @flow
+
 // Utilities
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 // Components
 import HistoryList from './HistoryList';
@@ -12,17 +13,44 @@ import {
     storage
 } from './../constants';
 
-export default class SearchForm extends Component {
-    state = {
-        inputValue: '',
-        buttonDisabled: true,
-        pageNumberToShow: 1,
-        historyListIsActive: false,
-        historyList: storage.local,
-        suggestionList: []
-    };
+declare type ElementEventTemplate<E> = {
+    target: E,
+    currentTarget: E
+  } & Event;
 
-    componentWillReceiveProps(nextProps) {
+declare type InputEvent = ElementEventTemplate<HTMLInputElement>;
+
+type PropsType = {
+    onSearch: Function,
+    clearQuery: string,
+    loadMore: Function
+}
+
+type StateType = {
+    inputValue: string,
+    buttonDisabled: boolean,
+    pageNumberToShow: number,
+    historyListIsActive: boolean,
+    historyList: Array<string>,
+    suggestionList: Array<any>
+}
+
+export default class SearchForm extends Component<PropsType, StateType> {
+    constructor(props: PropsType) {
+        super(props);
+        this.state = {
+            inputValue: '',
+            buttonDisabled: true,
+            pageNumberToShow: 1,
+            historyListIsActive: false,
+            historyList: storage.local,
+            suggestionList: []
+        };
+    }
+
+    state: StateType;
+
+    componentWillReceiveProps(nextProps: PropsType) {
         nextProps.clearQuery === true && this.setState({
             inputValue: ''
         });
@@ -43,7 +71,7 @@ export default class SearchForm extends Component {
         this.loadMoreItems(nextSearchPage);
     }
 
-    searchImages = (path) => {
+    searchImages = (path: string) => {
         this.props.onSearch(path);
         let filteredHistoryList = this.state.historyList;
         this.state.inputValue !== '' &&
@@ -55,12 +83,12 @@ export default class SearchForm extends Component {
         });
     }
 
-    loadMoreItems = (path) => {
+    loadMoreItems = (path: string) => {
         this.props.loadMore(path);
     }
 
-    handleEnterKeyPress = (event, searchByInputValue) => {
-        if (event.keyCode === 13 && this.state.inputValue !== '') {
+    handleEnterKeyPress = (event: KeyboardEvent, searchByInputValue: string) => {
+        if (event.key === 13 && this.state.inputValue !== '') {
             this.searchImages(searchByInputValue);
         }
     }
@@ -71,7 +99,7 @@ export default class SearchForm extends Component {
         });
     }
 
-    searchByHistory = (historyItem) => {
+    searchByHistory = (historyItem: string) => {
 
         this.setState({ inputValue: historyItem }, () => {
             const nextSearchPage = `${API.SEARCH_ITEMS}?page=${this.state.pageNumberToShow}&per_page=12&query=${this.state.inputValue}&client_id=${unsplashClient.ID}`;
@@ -79,11 +107,14 @@ export default class SearchForm extends Component {
         });
     }
 
-    updateInputValue = (event) => {
-        const valueLength = event.target.value.trim().length;
+    updateInputValue = (event: InputEvent) => {
+        const target = event.target;
+        const currentTarget = event.currentTarget;
+
+        const valueLength = target.value.trim().length;
 
         this.setState({
-            inputValue: event.currentTarget.value
+            inputValue: currentTarget.value
         });
 
         if (valueLength >= 3) {
@@ -155,6 +186,3 @@ export default class SearchForm extends Component {
     }
 }
 
-SearchForm.propTypes = {
-    onSearch: PropTypes.func.isRequired
-};
