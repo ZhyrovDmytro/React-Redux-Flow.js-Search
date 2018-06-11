@@ -1,14 +1,28 @@
+// @flow
+
 // Utilities
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 // Components
 import InfoOptions from './InfoOptions';
 import ProfileImage from './ProfileImage';
 import Icon from './base/Icon';
 
-export default class ModalWindow extends Component {
+type PropsType = {
+    image: Object,
+    user: Object,
+    links: Object,
+    urls: Object,
+    html: string,
+    small: string,
+    username: string,
+    location: string,
+    regular: string,
+    handleClickOutside: Function,
+    wrapperRef: Element | null
+}
 
+export default class ModalWindow extends Component<PropsType> {
     componentDidMount = () => {
         document.addEventListener('mousedown', this.handleClickOutside);
     }
@@ -17,13 +31,19 @@ export default class ModalWindow extends Component {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
-    setWrapperRef = (node) => {
+    setWrapperRef = (node?: Element | null) => {
+        console.log(this.wrapperRef);
         this.wrapperRef = node;
     }
 
-    handleClickOutside = (event) => {
-        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.props.handleClickOutside();
+    wrapperRef = null;
+
+    handleClickOutside = (event: MouseEvent) => {
+        const target = event.target;
+        if (target instanceof Node) {
+            if (this.wrapperRef && !this.wrapperRef.contains(target)) {
+                this.props.handleClickOutside();
+            }
         }
     }
 
@@ -80,18 +100,18 @@ export default class ModalWindow extends Component {
     }
 }
 
-ModalWindow.propTypes = {
-    image: PropTypes.PropTypes.shape({
-        user: PropTypes.PropTypes.shape({
-            links: PropTypes.PropTypes.shape({
-                html: PropTypes.string.isRequired
-            }).isRequired,
-            username: PropTypes.string.isRequired,
-            location: PropTypes.string
-        }).isRequired,
-        urls: PropTypes.PropTypes.shape({
-            regular: PropTypes.string.isRequired
-        }).isRequired
-    }).isRequired
-};
+// ModalWindow.propTypes = {
+//     image: PropTypes.PropTypes.shape({
+//         user: PropTypes.PropTypes.shape({
+//             links: PropTypes.PropTypes.shape({
+//                 html: PropTypes.string.isRequired
+//             }).isRequired,
+//             username: PropTypes.string.isRequired,
+//             location: PropTypes.string
+//         }).isRequired,
+//         urls: PropTypes.PropTypes.shape({
+//             regular: PropTypes.string.isRequired
+//         }).isRequired
+//     }).isRequired
+// };
 

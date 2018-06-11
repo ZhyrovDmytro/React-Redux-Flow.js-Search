@@ -2,13 +2,11 @@
 
 import React from 'react';
 
-type Props = {
-    info: Object,
-    profile_image: Object,
-    small: string
+type PropsType = {
+    info: Object
 }
 
-const profileImage = (props: Props) => {
+const profileImage = (props: PropsType) => {
     return (
         <img
             className="results__profile--image"

@@ -42,8 +42,6 @@ export default class SearchForm extends Component<PropsType, StateType> {
         };
     }
 
-    state: StateType;
-
     componentWillReceiveProps(nextProps: PropsType) {
         nextProps.clearQuery === true && this.setState({
             inputValue: ''
