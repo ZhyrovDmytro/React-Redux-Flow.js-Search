@@ -30,17 +30,15 @@ type StateType = {
 }
 
 export default class SearchForm extends Component<PropsType, StateType> {
-    constructor(props: PropsType) {
-        super(props);
-        this.state = {
-            inputValue: '',
-            buttonDisabled: true,
-            pageNumberToShow: 1,
-            historyListIsActive: false,
-            historyList: storage.local,
-            suggestionList: []
-        };
-    }
+
+    state = {
+        inputValue: '',
+        buttonDisabled: true,
+        pageNumberToShow: 1,
+        historyListIsActive: false,
+        historyList: storage.local,
+        suggestionList: []
+    };
 
     componentWillReceiveProps(nextProps: PropsType) {
         nextProps.clearQuery === true && this.setState({

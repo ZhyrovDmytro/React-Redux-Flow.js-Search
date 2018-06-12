@@ -8,7 +8,18 @@ import InfoOptions from './InfoOptions';
 import ProfileImage from './ProfileImage';
 
 type PropsType = {
-    info: Object
+    info: {
+        user: {
+            profile_image: {
+                small: string
+            },
+            links: {
+                html: string
+            },
+            first_name: string,
+            last_name: string,
+        }
+    }
 }
 
 const ItemInfo = (props: PropsType) => {

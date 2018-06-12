@@ -3,7 +3,18 @@
 import React from 'react';
 
 type PropsType = {
-    info: Object
+    info: {
+        user: {
+            profile_image: {
+                small: string
+            },
+            links: {
+                html: string
+            },
+            first_name: string,
+            last_name: string,
+        }
+    }
 }
 
 const profileImage = (props: PropsType) => {
