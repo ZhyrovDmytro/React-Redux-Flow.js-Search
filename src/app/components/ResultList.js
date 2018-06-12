@@ -7,11 +7,11 @@ import React from 'react';
 import Item from './Item';
 import getRandomNumber from '../helpers/getRandomNumber';
 
-type Props = {
+type PropTypes = {
     images: Array<Object>
 }
 
-const resultList = (props: Props) => {
+const resultList = (props: PropTypes) => {
 
     const createItem = props.images.map((image) => {
         return (
