@@ -1,12 +1,16 @@
+// @flow
+
 // Utilities
 import React from 'react';
-import PropTypes from 'prop-types';
-import ReactSVG from 'react-svg';
 
 // Components
 import Icon from './base/Icon';
 
-const infoOptions = props => {
+type PropsType = {
+    info: Object
+}
+
+const infoOptions = (props: PropsType) => {
     return (
         <div className="results__option">
             <a href={props.info.links.html} className="link link--grey results__option--like">
@@ -27,16 +31,6 @@ const infoOptions = props => {
             </a>
         </div>
     );
-};
-
-infoOptions.propTypes = {
-    info: PropTypes.PropTypes.shape({
-        links: PropTypes.PropTypes.shape({
-            html: PropTypes.string.isRequired,
-            download: PropTypes.string.isRequired
-        }).isRequired,
-        likes: PropTypes.number.isRequired
-    }).isRequired
 };
 
 export default infoOptions;

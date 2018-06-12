@@ -11,7 +11,7 @@ module.exports = {
         'class-methods-use-this': [1, { 'exceptMethods': [] }],
         'comma-dangle': [1, 'never'],
         'fp/no-mutating-assign': 2,
-        'import/extensions': 2, // Ensure consistent use of file extension.
+        'import/extensions': 0, // Ensure consistent use of file extension.
         'import/first': 0, // Este sorts by atom/sort-lines natural order.
         'import/newline-after-import': 0,
         'import/no-duplicates': 2,

@@ -1,12 +1,17 @@
+// @flow
+
 // Utilities
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // Components
 import Item from './Item';
 import getRandomNumber from '../helpers/getRandomNumber';
 
-const resultList = props => {
+type PropTypes = {
+    images: Array<Object>
+}
+
+const resultList = (props: PropTypes) => {
 
     const createItem = props.images.map((image) => {
         return (
@@ -24,10 +29,6 @@ const resultList = props => {
             { createItem }
         </div>
     );
-};
-
-resultList.propTypes = {
-    images: PropTypes.array.isRequired
 };
 
 export default resultList;

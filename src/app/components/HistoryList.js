@@ -1,13 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
 
-const historyList = props => {
+import React from 'react';
+import getRandomNumber from '../helpers/getRandomNumber';
+
+type PropTypes = {
+    suggestItemToShow: Array<string>,
+    searchByHistory: Function
+}
+
+const historyList = (props: PropTypes) => {
     const historyItemsToShow = props.suggestItemToShow.slice(0, 5);
 
     const createHistoryItem = historyItemsToShow.map((historyItem) => {
         return (
             <li
-                key={`_${historyItem.id}${Math.random()}`}
+                key={`_${getRandomNumber()}`}
                 className="history__item"
                 onMouseDown={() => props.searchByHistory(historyItem)}
                 role="menuitem"
@@ -26,11 +33,6 @@ const historyList = props => {
             </ul>
         </div>
     );
-};
-
-historyList.propTypes = {
-    suggestItemToShow: PropTypes.arrayOf(PropTypes.string).isRequired,
-    searchByHistory: PropTypes.func.isRequired
 };
 
 export default historyList;
